@@ -1,4 +1,4 @@
-from data_structures.Set import Set
+from data_structures.set_abc import Set
 
 
 class HashSet(Set):
