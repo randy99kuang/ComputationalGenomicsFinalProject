@@ -30,3 +30,4 @@ For this project, we need genomes of organisms that have several closely related
 2. Test our implementation on even larger data sets. For example, we can use eukaryotic genomes and manually simulate variants by adding in random edits. 
 3. Create a graph for better visualization of the differences and similarities of these viral strains. Either do this initially using a modified De Brujin graph or a modified Overlap Graph. If we have enough time, find a better way to graph and visualize this data.
 
+test edit
