@@ -29,5 +29,3 @@ For this project, we need genomes of organisms that have several closely related
 1. Try set implementations that include count statistics (ex. Counting Bloom Filters, Count Min-Sketch, and Counting Quotient Filters), and adjust our intersection/union algorithm to reflect the counts of specific k-mers in these data structures. For example, if one specific k-mer appears in one counting bloom filter 3 times and in another counting bloom filters 5 times, the intersection of the two will have that k-mer appear 3 times. 
 2. Test our implementation on even larger data sets. For example, we can use eukaryotic genomes and manually simulate variants by adding in random edits. 
 3. Create a graph for better visualization of the differences and similarities of these viral strains. Either do this initially using a modified De Brujin graph or a modified Overlap Graph. If we have enough time, find a better way to graph and visualize this data.
-
-test edit
