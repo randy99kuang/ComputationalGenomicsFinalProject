@@ -1,8 +1,8 @@
-#from src.data_structures.set_abc import Set
+from src.data_structures.set_abc import Set
 import sys
 
 
-def parse(txt):
+def parse_file(txt, ds):
     count = -1
     genomeList = []
     while True:
@@ -16,15 +16,9 @@ def parse(txt):
             continue
         # line = line.replace("-", "")
         genomeList[count] = genomeList[count] + line
-    return genomeList
-
-
-g = open(sys.argv[1], "r")
-readList = parse(g)
-test = {}
-for i in range(len(readList)):
-    if readList[i] in test:
-        print("same string")
-        print(i)
-    else:
-        test[readList[i]] = 1
+    
+def break_kmers(genome, ds, kmer_size):
+    for i in range(len(genome) - kmer_size + 1):  # for each k-mer
+            kmer = genome[i:i+kmer_size]
+            ds.insert(kmer)
+    return ds
