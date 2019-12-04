@@ -1,4 +1,4 @@
-from data_structures.set_abc import Set
+from src.data_structures.set_abc import Set
 
 
 class HashSet(Set):
@@ -10,7 +10,7 @@ class HashSet(Set):
         return x in self.elements
 
     def insert(self, x):
-        if not contains(self, x):
+        if not self.contains(x):
             self.elements[x] = 1
         else:
             self.elements[x] += 1
