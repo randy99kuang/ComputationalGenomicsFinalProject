@@ -6,6 +6,9 @@ class HashSet(Set):
     def __init__(self):
         self.elements = {}
 
+    def getDictionary(self):
+        return self.elements
+
     def contains(self, x):
         return x in self.elements
 
@@ -19,19 +22,26 @@ class HashSet(Set):
         if self.contains(x):
             return self.elements[x]
         else:
-            return -1
+            return 0
 
-    def intersect(self, other):
-        keyIntersect = set(self.keys()) & set(other.keys())
-        ret = {}
+    def union(self, b):
+        bDict = b.getDictionary()
+        keyIntersect = set(self.elements.keys()).union(set(bDict.keys()))
+        aNew = {}
         for i in keyIntersect:
-            ret[i] = self[i] + other[i]
-        return ret
+            aNew[i] = self.getCount(i) + b.getCount(i)
 
-    def union(self, other):
-        keyUnion = self.keys().union(other.keys())
-        ret = {}
-        for i in keyUnion:
-            #Get value if exists, add 0 if it doesn't exist
-            ret[i] = self.get(i, 0) + other.get(i, 0)
-        return ret
+        self.elements.clear()
+        bDict.clear()
+        self.elements = aNew
+
+    def intersection(self, b):
+        bDict = b.getDictionary()
+        keyIntersection = set(self.elements.keys()).intersection(set(bDict.keys()))
+        aNew = {}
+        for i in keyIntersection:
+            aNew[i] = min(self.getCount(i), b.getCount(i))
+
+        self.elements.clear()
+        bDict.clear()
+        self.elements = aNew
