@@ -1,5 +1,5 @@
 import sys
-from parse import *
+from src.analysis.parse import *
 from src.data_structures.hashset import HashSet
 
 kmer_size = 20
