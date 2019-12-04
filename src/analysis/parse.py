@@ -1,6 +1,7 @@
 #from src.data_structures.set_abc import Set
 import sys
 
+
 def parse(txt):
     count = -1
     genomeList = []

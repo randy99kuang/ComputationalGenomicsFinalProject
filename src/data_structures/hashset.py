@@ -15,6 +15,12 @@ class HashSet(Set):
         else:
             self.elements[x] += 1
 
+    def getCount(self, x):
+        if self.contains(x):
+            return self.elements[x]
+        else:
+            return -1
+
     def intersect(self, other):
         keyIntersect = set(self.keys()) & set(other.keys())
         ret = {}
