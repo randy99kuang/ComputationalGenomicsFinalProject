@@ -9,7 +9,10 @@ def mask(val):
 
 class counting_filter(object):
     def __init__(self, genome):
-        self.items = [0] * len(genome)
+        if genome == 'hiv':
+            self.items = [0] * 143776
+        elif genome == 'ecoli':
+            self.items = [0]
 
     def insert(self, item):
         bits = mask(item)
