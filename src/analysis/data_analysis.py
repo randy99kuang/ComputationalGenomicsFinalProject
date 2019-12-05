@@ -1,7 +1,6 @@
 import sys
 sys.path.insert(1, '../../')
 from src.analysis.cluster import *
-from .cluster import * 
 from pympler import asizeof
 
 hs_final = None
