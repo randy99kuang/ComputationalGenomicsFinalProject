@@ -37,6 +37,7 @@ class HashSet(Set):
         self.elements.clear()
         bDict.clear()
         self.elements = aNew
+        return self
 
     def intersection(self, b):
         bDict = b.getDictionary()
@@ -48,3 +49,4 @@ class HashSet(Set):
         self.elements.clear()
         bDict.clear()
         self.elements = aNew
+        return self 

@@ -29,7 +29,26 @@ def readHIV(kmer_size, ds):
 
     return ds_list
 
+
 def merge(numIntersections, ds_list):
     for i in range(numIntersections):   # start by intersecting all sets numIntersection times
+        new_list = []
+        currentSize = int(len(ds_list) / 2)
+        for j in range(currentSize):
+            a = ds_list[0]
+            b = ds_list[1]
+            new_list.append(a.intersection(b))
+            del ds_list[:2]             # remove the first two elements
+        ds_list = new_list
 
-    return ds_list[0]   # return the only element left in the list
+    while len(ds_list) > 1:
+        new_list = []
+        currentSize = int(len(ds_list) / 2)
+        for j in range(currentSize):
+            a = ds_list[0]
+            b = ds_list[1]
+            new_list.append(a.union(b))
+            del ds_list[:2]             # remove the first two elements
+        ds_list = new_list
+
+    return ds_list[0]                   # return the only element left in the list

@@ -82,6 +82,8 @@ class BloomFilter(Set):
             if bBitArray[i]:
                 self.bit_array[i] = True
 
+        return self
+
     def intersection(self, b):
         """
         b  :  bloom_filter to intersect with
@@ -98,6 +100,8 @@ class BloomFilter(Set):
                 newBitArray[i] = 1
 
         self.bit_array = newBitArray
+
+        return self
 
     @classmethod
     def get_size(self, n, p):

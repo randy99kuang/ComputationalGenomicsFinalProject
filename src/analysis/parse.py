@@ -10,9 +10,10 @@ def parse_file(txt):
         if len(line) == 0:
             # End of file
             break
+
         if line[0] == ">":  # append whenever we see the mark for a new strain's genome
             if len(currentString) > 0:
-                currentString.translate({ord(c): None for c in string.whitespace})  # strip whitespaces
+                currentString = currentString.translate({ord(c): None for c in string.whitespace})  # strip whitespaces
                 genomeList.append(currentString)
                 currentString = ""
             continue
@@ -21,7 +22,7 @@ def parse_file(txt):
             currentString = currentString + line
 
     # append list string to list
-    currentString.translate({ord(c): None for c in string.whitespace})  # strip whitespaces
+    currentString = currentString.translate({ord(c): None for c in string.whitespace})  # strip whitespaces
     genomeList.append(currentString)
 
     return genomeList
