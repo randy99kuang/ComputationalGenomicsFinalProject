@@ -234,7 +234,29 @@ def compareTimeAnalyses():
     plt.show()
 
 
-def accuracyAnalysis():
-    preprocessAllHIV(100, 1)
-    hash_ele = {}
-    #for i in range(hs_final.getSize()):
+def accuracyAnalysisHIV():
+    for i in range(1, 6, 1):
+        print("number of intersections: ", i)
+        preprocessAllHIV(100, i)
+        hashDictionary = hs_final.getDictionary()
+        totalCorrect = 0
+        total = len(hashDictionary)
+        falseNegativeCount = 0
+        falseNegativeSum = 0
+        for key, value in hashDictionary.items():
+            if value >= 2 ** i:
+                if bf_final.contains(key):
+                    totalCorrect += 1
+                else:
+                    # print("Error: bloom filter does not contain key when it should, of value:", value)
+                    falseNegativeCount += 1
+                    falseNegativeSum += value
+            else:
+                if not bf_final.contains(key):
+                    totalCorrect += 1
+                # else:
+                #   print("Error: bloom filter does contain key when it shouldn't, of value:", value)
+
+        print(totalCorrect / total)
+        print("false negative average:", falseNegativeSum / falseNegativeCount)
+
