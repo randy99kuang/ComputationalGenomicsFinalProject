@@ -47,9 +47,9 @@ class CountingFilter(Set):
             # With different seed, digest created is different
             digest = mmh3.hash(item, i) % self.size
             digests.append(digest)
-
+            self.bit_array[digest] = self.bit_array[digest] + 1
             # Add to each element in bit_array
-        self.bit_array = [x+1 for x in self.bit_array[digests]]
+        # self.bit_array = [x+1 for x in self.bit_array[digests]]
 
     def contains(self, item):
         """
