@@ -13,6 +13,8 @@ def preprocessHIV(kmer_length):
     into both as well. This method will be called before many of the data-analysis methods
     """
 
+    global hs_final, bf_final, hs_test_list, bf_test_list   # mark these as global variables so we can edit them 
+
     hs_list = readHIV(kmer_length, "HashSet")
     hs_final = merge(0, hs_list)
     print("Final length of all union hash set:", hs_final.getSize())
@@ -50,7 +52,11 @@ def spaceAnalysis():
     This will use Pympler's asizeof.asizeof() method to find the deep size of bloom filters and hash sets
     """
 
-    return 0
+    preprocessHIV(100)
+    print("Final length of all union hash set:", hs_final.getSize())
+    print("true size in bytes of hash set:", asizeof.asizeof(hs_final))
+    print("bit size of bloom filter:", bf_final.getBitSize())
+    print("true size in bytes of bloom filter:", asizeof.asizeof(bf_final))
 
 
 def timeAnalysis():
@@ -58,4 +64,4 @@ def timeAnalysis():
     This will use Python's timeit method to find how long it takes to build the bloom filters and hash sets
     """
 
-    return 0 
+    return 0
