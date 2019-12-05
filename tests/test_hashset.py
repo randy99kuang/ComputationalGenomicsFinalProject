@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(1, '../')
 import unittest
 import random
 from src.data_structures.hashset import HashSet
