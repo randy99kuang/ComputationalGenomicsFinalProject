@@ -26,8 +26,8 @@ class CountingFilter(Set):
         # number of hash functions to use
         self.hash_count = self.get_hash_count(self.size, items_count)
 
-        # Bit array of given size
-        self.bit_array = [0] * self.size
+        # Counting array of given size
+        self.counting_array = [0] * self.size
 
 
     def getBitSize(self):
@@ -47,7 +47,7 @@ class CountingFilter(Set):
             # With different seed, digest created is different
             digest = mmh3.hash(item, i) % self.size
             digests.append(digest)
-            self.bit_array[digest] = self.bit_array[digest] + 1
+            self.counting_array[digest] = self.counting_array[digest] + 1
             # Add to each element in bit_array
         # self.bit_array = [x+1 for x in self.bit_array[digests]]
 
@@ -57,7 +57,7 @@ class CountingFilter(Set):
         """
         for i in range(self.hash_count):
             digest = mmh3.hash(item, i) % self.size
-            if self.bit_array[digest] == 0:
+            if self.counting_array[digest] == 0:
                 # if any of bit is False then,its not present
                 # in filter
                 # else there is probability that it exist
@@ -65,34 +65,34 @@ class CountingFilter(Set):
         return True
 
     def getBitArray(self):
-        return self.bit_array
+        return self.counting_array
 
     def union(self, b):
         """
-        b  :  bloom_filter to union with
+        b  :  counting_filter to union with
 
         unions self and b, and stores the union in self
         b will be automatically discarded by garbage collector
         """
-
+        mp = b.getCountingArray()
         for index in range(self.size):
-            self.bit_array[index] += b[index]
+            self.counting_array[index] += mp[index]
 
         return self
 
     def intersection(self, b):
         """
-        b  :  bloom_filter to intersect with
+        b  :  counting_filter to intersect with
 
         intersects self and b, and stores the intersection in self
         b will be automatically discarded by garbage collector
         """
-
+        mp = b.getCountingArray()
         for index in range(self.size):
-            if self.bit_array[index] < b[index]:
+            if self.counting_array[index] < mp[index]:
                 continue
-            elif b[index] < self.bit_array[index]:
-                self.bit_array[index] = b[index]
+            elif mp[index] < self.counting_array[index]:
+                self.counting_array[index] = mp[index]
         return self
 
     @classmethod
