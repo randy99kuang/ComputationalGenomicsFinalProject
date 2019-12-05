@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(1, '../')
 import unittest
 import random
 import math
@@ -9,7 +11,7 @@ buffer = 0.05   # Small buffer for false positive rate when unit testing
 
 
 class TestHashSet(unittest.TestCase):
-    
+
     def test_test(self):
         self.assertTrue(True)
         self.assertFalse(False)
