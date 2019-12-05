@@ -3,26 +3,42 @@ from pympler import asizeof
 
 hs_final = None
 bf_final = None
+hs_test_list = []
 bf_test_list = []
 
 
-def preprocess():
-    hs_list = readHIV(100, "HashSet")
+def preprocessHIV(kmer_length):
+    """
+    Method that reads the 32 HIV strains into both a hashset and a bloom filter, and then reads the 5 test strains
+    into both as well. This method will be called before many of the data-analysis methods
+    """
+
+    hs_list = readHIV(kmer_length, "HashSet")
     hs_final = merge(0, hs_list)
-    print("Final size of all union hash set:", hs_final.getSize())
+    print("Final length of all union hash set:", hs_final.getSize())
     print("true size in bytes of hash set:", asizeof.asizeof(hs_final))
 
-    bf_list = readHIV(100, "BloomFilter")
-    bf_final = merge(3, bf_list)
+    bf_list = readHIV(kmer_length, "BloomFilter")
+    bf_final = merge(0, bf_list)
     print("bit size of bloom filter:", bf_final.getBitSize())
     print("true size in bytes of bloom filter:", asizeof.asizeof(bf_final))
 
     f = open("..\\data\\HIV\\hiv5Test.fasta", "r")
     genome_test_list = parse_file(f)
 
+    # Fill in bf_test_list
     for i in range(len(genome_test_list)):
         bf_test_list.append(getDataStructure("BloomFilter"))
 
     for i in range(len(genome_test_list)):
-        bf_test_list[i] = break_kmers(genome_test_list[i], bf_test_list[i], 100)
-        print(bf_test_list[i].getBitSize())
+        bf_test_list[i] = break_kmers(genome_test_list[i], bf_test_list[i], kmer_length)
+
+    # Fill in hs_test_list
+    for i in range(len(genome_test_list)):
+        hs_test_list.append(getDataStructure("HashSet"))
+
+    for i in range(len(genome_test_list)):
+        hs_test_list[i] = break_kmers(genome_test_list[i], hs_test_list[i], kmer_length)
+
+def kmerLength_vs_size():
+    return 0
