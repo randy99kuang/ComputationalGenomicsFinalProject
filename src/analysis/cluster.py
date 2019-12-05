@@ -17,10 +17,10 @@ def getDataStructure(ds):
 
 
 def readHIV(kmer_size, ds):
-    g1 = open("..\\data\\HIV\\hiv16.fasta", "r")
+    g1 = open("data\\HIV\\hiv16.fasta", "r")
     list1 = parse_file(g1)
 
-    g2 = open("..\\data\\HIV\\hiv32.fasta", "r")
+    g2 = open("data\\HIV\\hiv32.fasta", "r")
     list2 = parse_file(g2)
 
     genomeList = list1 + list2
