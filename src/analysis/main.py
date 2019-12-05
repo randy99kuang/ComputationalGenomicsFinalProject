@@ -7,3 +7,5 @@ This file is just used to run methods in the data_analysis.py file
 """
 
 kmerLength_vs_hashset_size()
+# hashsetTimeAnalysis()
+# bloomfilterTimeAnalysis()

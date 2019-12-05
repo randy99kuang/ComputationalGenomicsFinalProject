@@ -70,7 +70,7 @@ def kmerLength_vs_hashset_size():
     for i in x:
         preprocessBloomFilterHIV(i, 0)
         preprocessHashSetHIV(i)
-        y_bf_bytes.append(bf_final.getBitSize())
+        y_bf_bytes.append(bf_final.getBitSize() / 8)
         y_hs_bytes.append(asizeof.asizeof(hs_final))
     fig = plt.figure()
     plt.plot(x, y_hs_bytes, label='HashSet')
@@ -83,11 +83,34 @@ def kmerLength_vs_hashset_size():
     plt.show()
 
 
-def timeAnalysis():
+def hashsetTimeAnalysis():
     """
     This will use Python's timeit method to find how long it takes to build the bloom filters and hash sets
     """
 
+    SETUP_CODE = ''' 
+from __main__ import preprocessHashSetHIV'''
+
+    TEST_CODE = ''' 
+preprocessHashSetHIV(100)'''
+
+    times = timeit.repeat(setup=SETUP_CODE, stmt=TEST_CODE, number=10)
+    print('Hash set creation and merge time: {}'.format(min(times)))
+
+
+def bloomfilterTimeAnalysis():
+    """
+    This will use Python's timeit method to find how long it takes to build the bloom filters and hash sets
+    """
+
+    SETUP_CODE = ''' 
+from __main__ import preprocessBloomFilterHIV'''
+
+    TEST_CODE = ''' 
+preprocessBloomFilterHIV(100, 0)'''
+
+    times = timeit.repeat(setup=SETUP_CODE, stmt=TEST_CODE, number=10)
+    print('Bloom filter creation and merge time: {}'.format(min(times)))
 
 
 
