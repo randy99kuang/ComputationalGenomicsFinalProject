@@ -36,6 +36,13 @@ def preprocessBloomFilterHIV(kmer_length, numIntersections):
     bf_final = merge(numIntersections, bf_list)
 
 
+def preprocessCountingFilterHIV(kmer_length, numIntersections):
+    global bf_final                    # mark this as global variables so we can edit them
+
+    bf_list = readHIV(kmer_length, "CountingFilter")
+    bf_final = merge(numIntersections, bf_list)
+
+
 def preprocessTestDataHIV(kmer_length):
     global hs_test_list, bf_test_list  # mark these as global variables so we can edit them
 
@@ -166,6 +173,47 @@ preprocessBloomFilterHIV(500, 0)'''
         bloomFilterTimes[i] = min(times)
     return bloomFilterTimes
 
+def countingfilterTimeAnalysis():
+    """
+    This will use Python's timeit method to find how long it takes to build the bloom filters and hash sets
+    """
+
+    SETUP_CODE = '''
+from __main__ import preprocessCountingFilterHIV'''
+
+    TEST_CODE = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    TEST_CODE[0] = '''
+preprocessCountingFilterHIV(5, 0)'''
+    TEST_CODE[1] = '''
+preprocessCountingFilterHIV(10, 0)'''
+    TEST_CODE[2] = '''
+preprocessCountingFilterHIV(30, 0)'''
+    TEST_CODE[3] = '''
+preprocessCountingFilterHIV(50, 0)'''
+    TEST_CODE[4] = '''
+preprocessCountingFilterHIV(70, 0)'''
+    TEST_CODE[5] = '''
+preprocessCountingFilterHIV(100, 0)'''
+    TEST_CODE[6] = '''
+preprocessCountingFilterHIV(120, 0)'''
+    TEST_CODE[7] = '''
+preprocessCountingFilterHIV(150, 0)'''
+    TEST_CODE[8] = '''
+preprocessCountingFilterHIV(190, 0)'''
+    TEST_CODE[9] = '''
+preprocessCountingFilterHIV(250, 0)'''
+    TEST_CODE[10] = '''
+preprocessCountingFilterHIV(350, 0)'''
+    TEST_CODE[11] = '''
+preprocessCountingFilterHIV(500, 0)'''
+
+    countingFilterTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+
+    for i in range(12):
+        times = timeit.repeat(setup=SETUP_CODE, stmt=TEST_CODE[i], number=3)
+        countingFilterTimes[i] = min(times)
+    return countingFilterTimes
+
 
 def compareTimeAnalyses():
     """
@@ -177,6 +225,7 @@ def compareTimeAnalyses():
     fig = plt.figure()
     plt.plot(kmerSizeList, hashsetTimeAnalysis(), label='HashSet')
     plt.plot(kmerSizeList, bloomfilterTimeAnalysis(), label='BloomFilter')
+    plt.plot(kmerSizeList, countingfilterTimeAnalysis(), label='CountingFilter')
     plt.xlabel('k-mer length (nucleotides)')
     plt.ylabel('time to construct (seconds)')
     plt.title('Impact of k-mer length on construction time of HashSets and BloomFilters')
@@ -188,4 +237,4 @@ def compareTimeAnalyses():
 def accuracyAnalysis():
     preprocessAllHIV(100, 1)
     hash_ele = {}
-    for i in range(hs_final.getSize()):
+    #for i in range(hs_final.getSize()):

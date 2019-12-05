@@ -1,6 +1,7 @@
 from src.analysis.parse import *
 from src.data_structures.hashset import HashSet
 from src.data_structures.bloom_filter import BloomFilter
+from src.data_structures.counting_filter import CountingFilter
 from pathlib import Path
 
 import sys
@@ -13,8 +14,10 @@ FPR = 0.005                     # the false positive rate we will use
 def getDataStructure(ds):
     if ds == "HashSet":
         return HashSet()
-    else:
+    elif ds == "BloomFilter":
         return BloomFilter(HIV_GENOME_AVERAGE_SIZE, FPR)
+    else:
+        return CountingFilter(HIV_GENOME_AVERAGE_SIZE, FPR)
 
 
 def readHIV(kmer_size, ds):
