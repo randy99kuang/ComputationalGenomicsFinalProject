@@ -1,9 +1,7 @@
-from src.analysis.cluster import *
+from src.analysis.data_analysis import *
 
-ds_list = readHIV(10, "HashSet")
-final = merge(0, ds_list)
-print(final.getSize())
+"""
+This file is just used to run methods in the data_analysis.py file
+"""
 
-for key, value in final.getDictionary().items():
-    if value > 10:
-        print(key, value)
+testTest()

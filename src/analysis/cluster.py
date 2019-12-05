@@ -3,12 +3,15 @@ from src.analysis.parse import *
 from src.data_structures.hashset import HashSet
 from src.data_structures.bloom_filter import BloomFilter
 
+HIV_GENOME_AVERAGE_SIZE = 9700  # approximate average length of HIV genomes used for testing
+FPR = 0.005                     # the false positive rate we will use
+
 
 def getDataStructure(ds):
     if ds == "HashSet":
         return HashSet()
     else:
-        return BloomFilter()
+        return BloomFilter(HIV_GENOME_AVERAGE_SIZE, FPR)
 
 
 def readHIV(kmer_size, ds):
@@ -25,7 +28,9 @@ def readHIV(kmer_size, ds):
         ds_list.append(getDataStructure(ds))
 
     for i in range(len(genomeList)):
+        # print(len(genomeList[i]))
         ds_list[i] = break_kmers(genomeList[i], ds_list[i], kmer_size)
+        # print(sum(ds_list[i].getDictionary().values()))
 
     return ds_list
 
