@@ -1,4 +1,5 @@
-import unittest, random
+import unittest
+import random
 from src.data_structures.hashset import HashSet
 
 
