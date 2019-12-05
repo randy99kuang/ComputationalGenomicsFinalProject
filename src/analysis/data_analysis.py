@@ -88,14 +88,41 @@ def hashsetTimeAnalysis():
     This will use Python's timeit method to find how long it takes to build the bloom filters and hash sets
     """
 
-    SETUP_CODE = ''' 
+    SETUP_CODE = '''
 from __main__ import preprocessHashSetHIV'''
 
-    TEST_CODE = ''' 
+    TEST_CODE = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    TEST_CODE[0] = '''
+preprocessHashSetHIV(5)'''
+    TEST_CODE[1] = '''
+preprocessHashSetHIV(10)'''
+    TEST_CODE[2] = '''
+preprocessHashSetHIV(30)'''
+    TEST_CODE[3] = '''
+preprocessHashSetHIV(50)'''
+    TEST_CODE[4] = '''
+preprocessHashSetHIV(70)'''
+    TEST_CODE[5] = '''
 preprocessHashSetHIV(100)'''
+    TEST_CODE[6] = '''
+preprocessHashSetHIV(120)'''
+    TEST_CODE[7] = '''
+preprocessHashSetHIV(150)'''
+    TEST_CODE[8] = '''
+preprocessHashSetHIV(190)'''
+    TEST_CODE[9] = '''
+preprocessHashSetHIV(250)'''
+    TEST_CODE[10] = '''
+preprocessHashSetHIV(350)'''
+    TEST_CODE[11] = '''
+preprocessHashSetHIV(500)'''
 
-    times = timeit.repeat(setup=SETUP_CODE, stmt=TEST_CODE, number=10)
-    print('Hash set creation and merge time: {}'.format(min(times)))
+    hashSetTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+
+    for i in range(12):
+        times = timeit.repeat(setup=SETUP_CODE, stmt=TEST_CODE[i], number=3)
+        hashSetTimes[i] = min(times)
+    return hashSetTimes
 
 
 def bloomfilterTimeAnalysis():
@@ -103,16 +130,60 @@ def bloomfilterTimeAnalysis():
     This will use Python's timeit method to find how long it takes to build the bloom filters and hash sets
     """
 
-    SETUP_CODE = ''' 
+    SETUP_CODE = '''
 from __main__ import preprocessBloomFilterHIV'''
 
-    TEST_CODE = ''' 
+    TEST_CODE = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    TEST_CODE[0] = '''
+preprocessBloomFilterHIV(5, 0)'''
+    TEST_CODE[1] = '''
+preprocessBloomFilterHIV(10, 0)'''
+    TEST_CODE[2] = '''
+preprocessBloomFilterHIV(30, 0)'''
+    TEST_CODE[3] = '''
+preprocessBloomFilterHIV(50, 0)'''
+    TEST_CODE[4] = '''
+preprocessBloomFilterHIV(70, 0)'''
+    TEST_CODE[5] = '''
 preprocessBloomFilterHIV(100, 0)'''
+    TEST_CODE[6] = '''
+preprocessBloomFilterHIV(120, 0)'''
+    TEST_CODE[7] = '''
+preprocessBloomFilterHIV(150, 0)'''
+    TEST_CODE[8] = '''
+preprocessBloomFilterHIV(190, 0)'''
+    TEST_CODE[9] = '''
+preprocessBloomFilterHIV(250, 0)'''
+    TEST_CODE[10] = '''
+preprocessBloomFilterHIV(350, 0)'''
+    TEST_CODE[11] = '''
+preprocessBloomFilterHIV(500, 0)'''
 
-    times = timeit.repeat(setup=SETUP_CODE, stmt=TEST_CODE, number=10)
-    print('Bloom filter creation and merge time: {}'.format(min(times)))
+    bloomFilterTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+
+    for i in range(12):
+        times = timeit.repeat(setup=SETUP_CODE, stmt=TEST_CODE[i], number=3)
+        bloomFilterTimes[i] = min(times)
+    return bloomFilterTimes
+
+
+def compareTimeAnalyses():
+    """
+        This function calls the TimeAnalysis() functions for all the data
+        structures, collects timing data vs kmer size, and plots them together
+    """
+    kmerSizeList = [5, 10, 30,  50, 70, 100, 120, 150, 190, 250, 350, 500]
+
+    fig = plt.figure()
+    plt.plot(kmerSizeList, hashsetTimeAnalysis(), label='HashSet')
+    plt.plot(kmerSizeList, bloomfilterTimeAnalysis(), label='BloomFilter')
+    plt.xlabel('k-mer length (nucleotides)')
+    plt.ylabel('time to construct (seconds)')
+    plt.title('Impact of k-mer length on construction time of HashSets and BloomFilters')
+    plt.legend()
+    plt.ticklabel_format(style='plain')
+    plt.show()
 
 
 def accuracyAnalysis():
     preprocessAllHIV()
-
