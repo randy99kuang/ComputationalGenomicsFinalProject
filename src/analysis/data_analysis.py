@@ -27,7 +27,7 @@ def preprocessHIV(kmer_length):
     print("bit size of bloom filter:", bf_final.getBitSize())
     print("true size in bytes of bloom filter:", asizeof.asizeof(bf_final))
 
-    f = open("data\\HIV\\hiv5Test.fasta", "r")
+    f = open("hiv5Test.fasta", "r")
     genome_test_list = parse_file(f)
 
     # Fill in bf_test_list
