@@ -18,11 +18,11 @@ def getDataStructure(ds):
 
 
 def readHIV(kmer_size, ds):
-    hiv16 = Path("data/HIV/hiv16.fasta")
+    hiv16 = Path("../data/HIV/hiv16.fasta")
     g1 = open(hiv16, "r")
     list1 = parse_file(g1)
 
-    hiv32 = Path("data/HIV/hiv32.fasta")
+    hiv32 = Path("../data/HIV/hiv32.fasta")
     g2 = open(hiv32, "r")
     list2 = parse_file(g2)
 

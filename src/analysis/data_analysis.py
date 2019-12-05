@@ -19,15 +19,11 @@ def preprocessHIV(kmer_length):
 
     hs_list = readHIV(kmer_length, "HashSet")
     hs_final = merge(0, hs_list)
-    print("Final length of all union hash set:", hs_final.getSize())
-    print("true size in bytes of hash set:", asizeof.asizeof(hs_final))
 
     bf_list = readHIV(kmer_length, "BloomFilter")
     bf_final = merge(0, bf_list)
-    print("bit size of bloom filter:", bf_final.getBitSize())
-    print("true size in bytes of bloom filter:", asizeof.asizeof(bf_final))
 
-    hiv5 = Path("data/HIV/hiv5Test.fasta")
+    hiv5 = Path("../data/HIV/hiv5Test.fasta")
     f = open(hiv5, "r")
     genome_test_list = parse_file(f)
 
