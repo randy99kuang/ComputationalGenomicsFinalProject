@@ -1,9 +1,10 @@
-import sys
-sys.path.insert(1, '../../')
-
 from src.analysis.parse import *
 from src.data_structures.hashset import HashSet
 from src.data_structures.bloom_filter import BloomFilter
+from pathlib import Path
+
+import sys
+sys.path.insert(1, '../../')
 
 HIV_GENOME_AVERAGE_SIZE = 9700  # approximate average length of HIV genomes used for testing
 FPR = 0.005                     # the false positive rate we will use
@@ -17,10 +18,12 @@ def getDataStructure(ds):
 
 
 def readHIV(kmer_size, ds):
-    g1 = open("..\\data\\HIV\\hiv16.fasta", "r")
+    hiv16 = Path("../data/HIV/hiv16.fasta")
+    g1 = open(hiv16, "r")
     list1 = parse_file(g1)
 
-    g2 = open("..\\data\\HIV\\hiv32.fasta", "r")
+    hiv32 = Path("../data/HIV/hiv32.fasta")
+    g2 = open(hiv32, "r")
     list2 = parse_file(g2)
 
     genomeList = list1 + list2
