@@ -40,5 +40,22 @@ def preprocessHIV(kmer_length):
     for i in range(len(genome_test_list)):
         hs_test_list[i] = break_kmers(genome_test_list[i], hs_test_list[i], kmer_length)
 
+
 def kmerLength_vs_size():
     return 0
+
+
+def spaceAnalysis():
+    """
+    This will use Pympler's asizeof.asizeof() method to find the deep size of bloom filters and hash sets
+    """
+
+    return 0
+
+
+def timeAnalysis():
+    """
+    This will use Python's timeit method to find how long it takes to build the bloom filters and hash sets
+    """
+
+    return 0 
