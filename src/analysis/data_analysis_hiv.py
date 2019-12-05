@@ -243,6 +243,7 @@ def accuracyAnalysisHIV():
         total = len(hashDictionary)
         falseNegativeCount = 0
         falseNegativeSum = 0
+
         for key, value in hashDictionary.items():
             if value >= 2 ** i:
                 if bf_final.contains(key):
@@ -259,3 +260,15 @@ def accuracyAnalysisHIV():
 
         print(totalCorrect / total)
         print("false negative average:", falseNegativeSum / falseNegativeCount)
+
+    for i in range(len(hs_test_list)):
+        kmers_contained_in_bf = 0
+        kmers_contained_in_hash = 0
+        for key, value in hs_test_list[i].getDictionary().items():
+            if bf_final.contains(key):
+                kmers_contained_in_bf += 1
+            if hs_final.contains(key):
+                kmers_contained_in_hash += 1
+
+        print("Test Strain Similarity Strain ", i, ": ", kmers_contained_in_bf/hs_test_list[i].getSize())
+        print("Test Strain Similarity Strain ", i, ": ", kmers_contained_in_hash / hs_test_list[i].getSize())
