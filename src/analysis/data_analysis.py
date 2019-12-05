@@ -113,6 +113,9 @@ preprocessBloomFilterHIV(100, 0)'''
     print('Bloom filter creation and merge time: {}'.format(min(times)))
 
 
+def accuracyAnalysis():
+    preprocessAllHIV()
+    
 
 
 
