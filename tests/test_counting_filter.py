@@ -185,12 +185,3 @@ class TestHashSet(unittest.TestCase):
         a.insert(str(1034))
         ret = a.howMany(str(1034))
         self.assertTrue(ret == 2)
-        # b = CountingFilter(n, p)
-        # for i in range(1000):
-        #     b.insert(str(i))
-        # for i in range(500, 1000):
-        #     b.insert(str(i))
-        # for i in range(500):
-        #     self.assertTrue(b.howMany(str(i)) == 1)
-        # for i in range(500, 1000):
-        #     self.assertTrue(b.howMany(str(i)) == 2)
