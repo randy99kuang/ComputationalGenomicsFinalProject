@@ -32,11 +32,11 @@ class TestHashSet(unittest.TestCase):
         for i in tempList:
             s.insert(str(i))
 
-        # If the Bloom Filter actually contains an element, it should always say it does
+        # If the Counting Filter actually contains an element, it should always say it does
         for i in range(1000):
             self.assertTrue(s.contains(str(i)))
 
-        # If a Bloom Filter does not contain an element, there is a ~5% chance of a false positive
+        # If a Counting Filter does not contain an element, there is a ~5% chance of a false positive
         errors = 0
         for i in range(-1, -1001, -1):
             if s.contains(str(i)):
@@ -176,3 +176,19 @@ class TestHashSet(unittest.TestCase):
             if a.contains(str(i)):
                 errors = errors + 1
         self.assertTrue(errors < n * (fpr + buffer))
+
+    def test_check_if_in(self):
+        a = CountingFilter(n, p)
+        a.insert(str(1034))
+        a.insert(str(1034))
+        ret = a.howMany(str(1034))
+        self.assertTrue(ret == 2)
+        b = CountingFilter(n, p)
+        for i in range(1000):
+            b.insert(str(i))
+        for i in range(500, 1000):
+            b.insert(str(i))
+        for i in range(500):
+            self.assertTrue(b.howMany(str(i)) == 1)
+        for i in range(500, 1000):
+            self.assertTrue(b.howMany(str(i)) == 2)

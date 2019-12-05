@@ -64,6 +64,14 @@ class CountingFilter(Set):
                 return False
         return True
 
+    def howMany(self, item):
+        low = float("inf")
+        for i in range(self.hash_count):
+            digest = mmh3.hash(item, i) % self.size
+            if self.counting_array[digest] < low:
+                low = self.counting_array[digest]
+        return low
+
     def getCountingArray(self):
         return self.counting_array
 
