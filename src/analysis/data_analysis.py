@@ -1,4 +1,5 @@
-from src.analysis.cluster import *
+# from src.analysis.cluster import *
+from .cluster import * 
 from pympler import asizeof
 
 hs_final = None
@@ -13,7 +14,7 @@ def preprocessHIV(kmer_length):
     into both as well. This method will be called before many of the data-analysis methods
     """
 
-    global hs_final, bf_final, hs_test_list, bf_test_list   # mark these as global variables so we can edit them 
+    global hs_final, bf_final, hs_test_list, bf_test_list   # mark these as global variables so we can edit them
 
     hs_list = readHIV(kmer_length, "HashSet")
     hs_final = merge(0, hs_list)
