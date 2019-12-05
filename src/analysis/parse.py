@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(1, '../../')
 from src.data_structures.set_abc import Set
 import string
 

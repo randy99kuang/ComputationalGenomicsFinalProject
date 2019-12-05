@@ -1,4 +1,6 @@
 import sys
+sys.path.insert(1, '../../')
+
 from src.analysis.parse import *
 from src.data_structures.hashset import HashSet
 from src.data_structures.bloom_filter import BloomFilter
