@@ -185,3 +185,22 @@ class TestHashSet(unittest.TestCase):
         a.insert(str(1034))
         ret = a.howMany(str(1034))
         self.assertTrue(ret == 2)
+
+        b = CountingFilter(n, p)
+        b.insert(str(1034))
+        b.insert(str(1034))
+        a.intersection(b)
+
+        ret2 = a.howMany(str(1034))
+        self.assertTrue(ret2 == 2)
+    
+    def test_check_Union(self):
+        a = CountingFilter(n, p)
+        a.insert(str(1034))
+        a.insert(str(1034))
+        b = CountingFilter(n, p)
+        b.insert(str(1034))
+        b.insert(str(1034))
+        a.union(b)
+        ret = a.howMany(str(1034))
+        self.assertTrue(ret == 4)
