@@ -228,7 +228,7 @@ def compareTimeAnalyses():
     plt.plot(kmerSizeList, countingfilterTimeAnalysis(), label='CountingFilter')
     plt.xlabel('k-mer length (nucleotides)')
     plt.ylabel('time to construct (seconds)')
-    plt.title('Impact of k-mer length on construction time of HashSets and BloomFilters')
+    plt.title('Impact of k-mer length on construction time of HashSets, BloomFilters, and CountingFilters')
     plt.legend()
     plt.ticklabel_format(style='plain')
     plt.show()
@@ -259,4 +259,3 @@ def accuracyAnalysisHIV():
 
         print(totalCorrect / total)
         print("false negative average:", falseNegativeSum / falseNegativeCount)
-
