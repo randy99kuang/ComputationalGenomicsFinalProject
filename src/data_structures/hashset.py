@@ -9,6 +9,9 @@ class HashSet(Set):
     def getDictionary(self):
         return self.elements
 
+    def getSize(self):
+        return len(self.elements)
+
     def contains(self, x):
         return x in self.elements
 
