@@ -60,7 +60,7 @@ class BloomFilter(Set):
                 return False
         return True
 
-    @staticmethod
+    @classmethod
     def get_size(self, n, p):
         """
         n : int
@@ -83,7 +83,7 @@ class BloomFilter(Set):
         m = -(n * math.log(p)) / (math.log(2) ** 2)
         return int(m)
 
-    @staticmethod
+    @classmethod
     def get_hash_count(self, m, n):
         """
         m : int

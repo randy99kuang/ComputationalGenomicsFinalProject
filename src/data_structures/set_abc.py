@@ -7,3 +7,9 @@ class Set(ABC):
 
     def insert(self):
         pass
+
+    def union(self, b):
+        pass
+
+    def intersection(self, b):
+        pass
