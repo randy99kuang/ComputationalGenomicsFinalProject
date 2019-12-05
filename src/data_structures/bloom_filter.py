@@ -32,6 +32,12 @@ class BloomFilter(Set):
         # initialize all bits as 0
         self.bit_array.setall(0)
 
+    def getBitSize(self):
+        return self.size
+
+    def getHashCount(self):
+        return self.hash_count
+
     def insert(self, item):
         """
         Add an item in the filter
@@ -59,6 +65,39 @@ class BloomFilter(Set):
                 # else there is probability that it exist
                 return False
         return True
+
+    def getBitArray(self):
+        return self.bit_array
+
+    def union(self, b):
+        """
+        b  :  bloom_filter to union with
+
+        unions self and b, and stores the union in self
+        b will be automatically discarded by garbage collector
+        """
+
+        bBitArray = b.getBitArray()
+        for i in range(self.size):
+            if bBitArray[i]:
+                self.bit_array[i] = True
+
+    def intersection(self, b):
+        """
+        b  :  bloom_filter to intersect with
+
+        intersects self and b, and stores the intersection in self
+        b will be automatically discarded by garbage collector
+        """
+
+        bBitArray = b.getBitArray()
+        newBitArray = bitarray(self.size)
+        newBitArray.setall(0)
+        for i in range(self.size):
+            if bBitArray[i] and self.bit_array[i]:
+                newBitArray[i] = 1
+
+        self.bit_array = newBitArray
 
     @classmethod
     def get_size(self, n, p):

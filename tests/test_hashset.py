@@ -90,7 +90,7 @@ class TestHashSet(unittest.TestCase):
         for i in range(500, 1000, 1):
             self.assertEqual(a.getCount(i), 1)
 
-    def test_intersection2(self):
+    def test_intersection3(self):
         a = HashSet()
         b = HashSet()
         c = HashSet()
