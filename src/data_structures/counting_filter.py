@@ -64,7 +64,7 @@ class CountingFilter(Set):
                 return False
         return True
 
-    def getBitArray(self):
+    def getCountingArray(self):
         return self.counting_array
 
     def union(self, b):
