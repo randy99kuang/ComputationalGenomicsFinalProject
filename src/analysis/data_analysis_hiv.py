@@ -8,7 +8,6 @@ sys.path.insert(1, '../../')
 hs_final = None
 bf_final = None
 hs_test_list = []
-bf_test_list = []
 
 
 def preprocessAllHIV(kmer_length, numIntersections):
@@ -49,10 +48,6 @@ def preprocessTestDataHIV(kmer_length):
     hiv5 = Path("../data/HIV/hiv5Test.fasta")
     f = open(hiv5, "r")
     genome_test_list = parse_file(f)
-
-    # Fill in bf_test_list
-    for i in range(len(genome_test_list)):
-        bf_test_list.append(getDataStructure("BloomFilter"))
 
     for i in range(len(genome_test_list)):
         bf_test_list[i] = break_kmers(genome_test_list[i], bf_test_list[i], kmer_length)
@@ -236,7 +231,7 @@ def compareTimeAnalyses():
 
 def accuracyAnalysisHIV():
     for i in range(1, 6, 1):
-        print("number of intersections: ", i)
+    # print("number of intersections: ", i)
         preprocessAllHIV(100, i)
         hashDictionary = hs_final.getDictionary()
         totalCorrect = 0
@@ -245,7 +240,7 @@ def accuracyAnalysisHIV():
         falseNegativeSum = 0
 
         for key, value in hashDictionary.items():
-            if value >= 2 ** i:
+            if value >= 2:
                 if bf_final.contains(key):
                     totalCorrect += 1
                 else:
@@ -260,15 +255,17 @@ def accuracyAnalysisHIV():
 
         print(totalCorrect / total)
         print("false negative average:", falseNegativeSum / falseNegativeCount)
+        for j in range(len(hs_test_list)):
+            kmers_contained_in_bf = 0
+            kmers_contained_in_hash = 0
+            for key, value in hs_test_list[j].getDictionary().items():
+                # if value >= 2:
+                if bf_final.contains(key):
+                    kmers_contained_in_bf += 1
+                if hs_final.contains(key):
+                    kmers_contained_in_hash += 1
 
-    for i in range(len(hs_test_list)):
-        kmers_contained_in_bf = 0
-        kmers_contained_in_hash = 0
-        for key, value in hs_test_list[i].getDictionary().items():
-            if bf_final.contains(key):
-                kmers_contained_in_bf += 1
-            if hs_final.contains(key):
-                kmers_contained_in_hash += 1
+            print("Test Strain Similarity to Bloom Filter, Strain", j + 1, ":", kmers_contained_in_bf/hs_test_list[j].getSize())
+            print("Test Strain Similarity to Hash, Strain", j + 1, ":", kmers_contained_in_hash / hs_test_list[j].getSize())
+        hs_test_list.clear()
 
-        print("Test Strain Similarity Strain ", i, ": ", kmers_contained_in_bf/hs_test_list[i].getSize())
-        print("Test Strain Similarity Strain ", i, ": ", kmers_contained_in_hash / hs_test_list[i].getSize())
