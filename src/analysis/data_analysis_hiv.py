@@ -9,6 +9,7 @@ hs_final = None
 bf_final = None
 cf_final = None
 hs_test_list = []
+bf_test_list = []
 
 
 def preprocessAllHIV(kmer_length, numIntersections):
@@ -51,8 +52,8 @@ def preprocessTestDataHIV(kmer_length):
     f = open(hiv5, "r")
     genome_test_list = parse_file(f)
 
-    for i in range(len(genome_test_list)):
-        bf_test_list[i] = break_kmers(genome_test_list[i], bf_test_list[i], kmer_length)
+    # for i in range(len(genome_test_list)):
+    #     bf_test_list[i] = break_kmers(genome_test_list[i], bf_test_list[i], kmer_length)
 
     # Fill in hs_test_list
     for i in range(len(genome_test_list)):
