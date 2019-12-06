@@ -4,7 +4,7 @@ from src.analysis.cluster import *
 from pympler import asizeof
 
 sys.path.insert(1, '../../')
-
+preprocess_bloom_filter = False
 hs_final = None
 bf_final = None
 cf_final = None
@@ -262,3 +262,14 @@ def accuracyAnalysisECOLI():
             print("Test Strain Similarity to Bloom Filter/Counting Filter, Strain", j + 1, ":", kmers_contained_in_bf/hs_test_list[j].getSize())
             print("Test Strain Similarity to Hash, Strain", j + 1, ":", kmers_contained_in_hash / hs_test_list[j].getSize())
         hs_test_list.clear()
+
+
+def mark_test_strain_kmers(kmer):
+    global preprocess_bloom_filter
+    if not preprocess_bloom_filter:
+        preprocessBloomFilterECOLI(len(kmer))
+        preprocess_bloom_filter = True
+    if bf_final.contains(kmer):
+        return True
+    else:
+        return False

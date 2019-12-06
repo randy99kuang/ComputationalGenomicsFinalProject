@@ -5,6 +5,7 @@ from pympler import asizeof
 
 sys.path.insert(1, '../../')
 
+preprocess_bloom_filter = False
 hs_final = None
 bf_final = None
 cf_final = None
@@ -429,3 +430,14 @@ def accuracyAnalysisHIV():
     plt.legend()
     plt.ticklabel_format(style='plain')
     plt.show()
+
+
+def mark_test_strain_kmers(kmer):
+    global preprocess_bloom_filter
+    if not preprocess_bloom_filter:
+        preprocessBloomFilterHIV(len(kmer))
+        preprocess_bloom_filter = True
+    if bf_final.contains(kmer):
+        return True
+    else:
+        return False
