@@ -101,35 +101,29 @@ def hashsetTimeAnalysisECOLI():
     SETUP_CODE = '''
 from __main__ import preprocessHashSetECOLI'''
 
-    TEST_CODE = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    TEST_CODE = [0, 1, 2, 3, 4, 5, 6, 7, 8]
     TEST_CODE[0] = '''
-preprocessHashSetECOLI(5)'''
-    TEST_CODE[1] = '''
-preprocessHashSetECOLI(10)'''
-    TEST_CODE[2] = '''
-preprocessHashSetECOLI(30)'''
-    TEST_CODE[3] = '''
 preprocessHashSetECOLI(50)'''
-    TEST_CODE[4] = '''
+    TEST_CODE[1] = '''
+preprocessHashSetECOLI(60)'''
+    TEST_CODE[2] = '''
 preprocessHashSetECOLI(70)'''
+    TEST_CODE[3] = '''
+preprocessHashSetECOLI(80)'''
+    TEST_CODE[4] = '''
+preprocessHashSetECOLI(90)'''
     TEST_CODE[5] = '''
 preprocessHashSetECOLI(100)'''
     TEST_CODE[6] = '''
-preprocessHashSetECOLI(120)'''
+preprocessHashSetECOLI(110)'''
     TEST_CODE[7] = '''
-preprocessHashSetECOLI(150)'''
+preprocessHashSetECOLI(120)'''
     TEST_CODE[8] = '''
-preprocessHashSetECOLI(190)'''
-    TEST_CODE[9] = '''
-preprocessHashSetECOLI(250)'''
-    TEST_CODE[10] = '''
-preprocessHashSetECOLI(350)'''
-    TEST_CODE[11] = '''
-preprocessHashSetECOLI(500)'''
+preprocessHashSetECOLI(130)'''
 
-    hashSetTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    hashSetTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
-    for i in range(12):
+    for i in range(9):
         times = timeit.repeat(setup=SETUP_CODE, stmt=TEST_CODE[i], number=3)
         hashSetTimes[i] = min(times)
     return hashSetTimes
@@ -143,35 +137,29 @@ def bloomfilterTimeAnalysisECOLI():
     SETUP_CODE = '''
 from __main__ import preprocessBloomFilterECOLI'''
 
-    TEST_CODE = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    TEST_CODE = [0, 1, 2, 3, 4, 5, 6, 7, 8]
     TEST_CODE[0] = '''
-preprocessBloomFilterECOLI(5, 0)'''
-    TEST_CODE[1] = '''
-preprocessBloomFilterECOLI(10, 0)'''
-    TEST_CODE[2] = '''
-preprocessBloomFilterECOLI(30, 0)'''
-    TEST_CODE[3] = '''
 preprocessBloomFilterECOLI(50, 0)'''
-    TEST_CODE[4] = '''
+    TEST_CODE[1] = '''
+preprocessBloomFilterECOLI(60, 0)'''
+    TEST_CODE[2] = '''
 preprocessBloomFilterECOLI(70, 0)'''
+    TEST_CODE[3] = '''
+preprocessBloomFilterECOLI(80, 0)'''
+    TEST_CODE[4] = '''
+preprocessBloomFilterECOLI(90, 0)'''
     TEST_CODE[5] = '''
 preprocessBloomFilterECOLI(100, 0)'''
     TEST_CODE[6] = '''
-preprocessBloomFilterECOLI(120, 0)'''
+preprocessBloomFilterECOLI(110, 0)'''
     TEST_CODE[7] = '''
-preprocessBloomFilterECOLI(150, 0)'''
+preprocessBloomFilterECOLI(120, 0)'''
     TEST_CODE[8] = '''
-preprocessBloomFilterECOLI(190, 0)'''
-    TEST_CODE[9] = '''
-preprocessBloomFilterECOLI(250, 0)'''
-    TEST_CODE[10] = '''
-preprocessBloomFilterECOLI(350, 0)'''
-    TEST_CODE[11] = '''
-preprocessBloomFilterECOLI(500, 0)'''
+preprocessBloomFilterECOLI(130, 0)'''
 
-    bloomFilterTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    bloomFilterTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
-    for i in range(12):
+    for i in range(9):
         times = timeit.repeat(setup=SETUP_CODE, stmt=TEST_CODE[i], number=3)
         bloomFilterTimes[i] = min(times)
     return bloomFilterTimes
@@ -184,35 +172,30 @@ def countingfilterTimeAnalysisECOLI():
     SETUP_CODE = '''
 from __main__ import preprocessCountingFilterECOLI'''
 
-    TEST_CODE = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    TEST_CODE = [0, 1, 2, 3, 4, 5, 6, 7, 8]
     TEST_CODE[0] = '''
-preprocessCountingFilterECOLI(5, 0)'''
-    TEST_CODE[1] = '''
-preprocessCountingFilterECOLI(10, 0)'''
-    TEST_CODE[2] = '''
-preprocessCountingFilterECOLI(30, 0)'''
-    TEST_CODE[3] = '''
 preprocessCountingFilterECOLI(50, 0)'''
-    TEST_CODE[4] = '''
+    TEST_CODE[1] = '''
+preprocessCountingFilterECOLI(60, 0)'''
+    TEST_CODE[2] = '''
 preprocessCountingFilterECOLI(70, 0)'''
+    TEST_CODE[3] = '''
+preprocessCountingFilterECOLI(80, 0)'''
+    TEST_CODE[4] = '''
+preprocessCountingFilterECOLI(90, 0)'''
     TEST_CODE[5] = '''
 preprocessCountingFilterECOLI(100, 0)'''
     TEST_CODE[6] = '''
-preprocessCountingFilterECOLI(120, 0)'''
+preprocessCountingFilterECOLI(110, 0)'''
     TEST_CODE[7] = '''
-preprocessCountingFilterECOLI(150, 0)'''
+preprocessCountingFilterECOLI(120, 0)'''
     TEST_CODE[8] = '''
-preprocessCountingFilterECOLI(190, 0)'''
-    TEST_CODE[9] = '''
-preprocessCountingFilterECOLI(250, 0)'''
-    TEST_CODE[10] = '''
-preprocessCountingFilterECOLI(350, 0)'''
-    TEST_CODE[11] = '''
-preprocessCountingFilterECOLI(500, 0)'''
+preprocessCountingFilterECOLI(130, 0)'''
 
-    countingFilterTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
-    for i in range(12):
+    countingFilterTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+
+    for i in range(9):
         times = timeit.repeat(setup=SETUP_CODE, stmt=TEST_CODE[i], number=3)
         countingFilterTimes[i] = min(times)
     return countingFilterTimes
@@ -223,10 +206,10 @@ def compareTimeAnalysesEcoli():
         This function calls the TimeAnalysis() functions for all the data
         structures, collects timing data vs kmer size, and plots them together
     """
-    kmerSizeList = [5, 10, 30,  50, 70, 100, 120, 150, 190, 250, 350, 500]
+    kmerSizeList = [50, 60, 70, 80, 90, 100, 110, 120, 130]
 
     fig = plt.figure()
-    plt.plot(kmerSizeList, hashsetTimeAnalysisECOLI(), label='HashSet')
+    #plt.plot(kmerSizeList, hashsetTimeAnalysisECOLI(), label='HashSet')
     plt.plot(kmerSizeList, bloomfilterTimeAnalysisECOLI(), label='BloomFilter')
     plt.plot(kmerSizeList, countingfilterTimeAnalysisECOLI(), label='CountingFilter')
     plt.xlabel('k-mer length (nucleotides)')
