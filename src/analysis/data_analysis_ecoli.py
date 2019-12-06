@@ -9,8 +9,6 @@ hs_final = None
 bf_final = None
 cf_final = None
 hs_test_list = []
-bf_test_list = []
-cf_test_list = []
 
 
 def preprocessAllECOLI(kmer_length, numIntersections):
@@ -18,11 +16,14 @@ def preprocessAllECOLI(kmer_length, numIntersections):
     Method that reads the 32 ECOLI strains into both a hashset and a bloom filter, and then reads the 5 test strains
     into both as well. This method will be called before many of the data-analysis methods
     """
-
-    preprocessHashSetECOLI(kmer_length)
+    #preprocessHashSetECOLI(kmer_length)
+    # print("test1")
     preprocessBloomFilterECOLI(kmer_length, numIntersections)
+    # # print("test2")
     preprocessCountingFilterECOLI(kmer_length, numIntersections)
-    # preprocessTestDataECOLI(kmer_length)
+    # # print("test3")
+    preprocessTestDataECOLI(kmer_length)
+    # # print("test4")
 
 
 def preprocessHashSetECOLI(kmer_length):
@@ -49,16 +50,15 @@ def preprocessCountingFilterECOLI(kmer_length, numIntersections):
 def preprocessTestDataECOLI(kmer_length):
     global hs_test_list, bf_test_list  # mark these as global variables so we can edit them
 
-    ECOLI5 = Path("../data/ECOLI/ECOLI5Test.fasta")
-    f = open(ECOLI5, "r")
-    genome_test_list = parse_file(f)
-
-    # Fill in bf_test_list
-    for i in range(len(genome_test_list)):
-        bf_test_list.append(getDataStructure("BloomFilter"))
-
-    for i in range(len(genome_test_list)):
-        bf_test_list[i] = break_kmers(genome_test_list[i], bf_test_list[i], kmer_length)
+    ECOLI1 = Path("../data/ECOLI/testecoli1.fas")
+    ECOLI2 = Path("../data/ECOLI/testecoli2.fas")
+    ECOLI3 = Path("../data/ECOLI/testecoli3.fas")
+    ECOLI4 = Path("../data/ECOLI/testecoli4.fas")
+    f1 = open(ECOLI1, "r")
+    f2 = open(ECOLI2, "r")
+    f3 = open(ECOLI3, "r")
+    f4 = open(ECOLI4, "r")
+    genome_test_list = [parse_file_ecoli(f1), parse_file_ecoli(f2), parse_file_ecoli(f3), parse_file_ecoli(f4)]
 
     # Fill in hs_test_list
     for i in range(len(genome_test_list)):
@@ -68,7 +68,7 @@ def preprocessTestDataECOLI(kmer_length):
         hs_test_list[i] = break_kmers(genome_test_list[i], hs_test_list[i], kmer_length)
 
 
-def kmerLength_vs_hashset_size():
+def kmerLength_vs_hashset_size_ecoli():
     """
     This will use Pympler's asizeof.asizeof() method to find the deep size of hash sets, and use the internal bit array
     size to approximate the deep size of bloom filters
@@ -93,7 +93,7 @@ def kmerLength_vs_hashset_size():
     plt.show()
 
 
-def hashsetTimeAnalysis():
+def hashsetTimeAnalysisECOLI():
     """
     This will use Python's timeit method to find how long it takes to build the bloom filters and hash sets
     """
@@ -135,7 +135,7 @@ preprocessHashSetECOLI(500)'''
     return hashSetTimes
 
 
-def bloomfilterTimeAnalysis():
+def bloomfilterTimeAnalysisECOLI():
     """
     This will use Python's timeit method to find how long it takes to build the bloom filters and hash sets
     """
@@ -176,7 +176,8 @@ preprocessBloomFilterECOLI(500, 0)'''
         bloomFilterTimes[i] = min(times)
     return bloomFilterTimes
 
-def countingfilterTimeAnalysis():
+
+def countingfilterTimeAnalysisECOLI():
     """
     This will use Python's timeit method to find how long it takes to build the bloom filters and hash sets
     """
@@ -217,7 +218,7 @@ preprocessCountingFilterECOLI(500, 0)'''
     return countingFilterTimes
 
 
-def compareTimeAnalyses():
+def compareTimeAnalysesEcoli():
     """
         This function calls the TimeAnalysis() functions for all the data
         structures, collects timing data vs kmer size, and plots them together
@@ -225,9 +226,9 @@ def compareTimeAnalyses():
     kmerSizeList = [5, 10, 30,  50, 70, 100, 120, 150, 190, 250, 350, 500]
 
     fig = plt.figure()
-    plt.plot(kmerSizeList, hashsetTimeAnalysis(), label='HashSet')
-    plt.plot(kmerSizeList, bloomfilterTimeAnalysis(), label='BloomFilter')
-    plt.plot(kmerSizeList, countingfilterTimeAnalysis(), label='CountingFilter')
+    plt.plot(kmerSizeList, hashsetTimeAnalysisECOLI(), label='HashSet')
+    plt.plot(kmerSizeList, bloomfilterTimeAnalysisECOLI(), label='BloomFilter')
+    plt.plot(kmerSizeList, countingfilterTimeAnalysisECOLI(), label='CountingFilter')
     plt.xlabel('k-mer length (nucleotides)')
     plt.ylabel('time to construct (seconds)')
     plt.title('Impact of k-mer length on construction time of HashSets, BloomFilters, and CountingFilters')
@@ -237,7 +238,7 @@ def compareTimeAnalyses():
 
 
 def accuracyAnalysisECOLI():
-    for i in range(1, 6, 1):
+    for i in range(1, 3, 1):
         print("number of intersections: ", i)
         preprocessAllECOLI(100, i)
         hashDictionary = hs_final.getDictionary()

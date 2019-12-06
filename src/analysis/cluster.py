@@ -44,21 +44,21 @@ def readHIV(kmer_size, ds):
 
 
 def readECOLI(kmer_size, ds):
-    ecoli1 = Path("../data/ECOLI/ecoli1.fasta")
+    ecoli1 = Path("../data/ECOLI/ecoli1.fas")
     g1 = open(ecoli1, "r")
-    list1 = parse_file(g1)
+    list1 = parse_file_ecoli(g1)
 
-    ecoli2 = Path("../data/ECOLI/ecoli2.fasta")
+    ecoli2 = Path("../data/ECOLI/ecoli2.fas")
     g2 = open(ecoli1, "r")
-    list2 = parse_file(g2)
+    list2 = parse_file_ecoli(g2)
 
-    ecoli3 = Path("../data/ECOLI/ecoli3.fasta")
+    ecoli3 = Path("../data/ECOLI/ecoli3.fas")
     g3 = open(ecoli1, "r")
-    list3 = parse_file(g3)
+    list3 = parse_file_ecoli(g3)
 
-    ecoli4 = Path("../data/ECOLI/ecoli4.fasta")
+    ecoli4 = Path("../data/ECOLI/ecoli4.fas")
     g4 = open(ecoli1, "r")
-    list4 = parse_file(g4)
+    list4 = parse_file_ecoli(g4)
 
     genomeList = list1 + list2 + list3 + list4
 
