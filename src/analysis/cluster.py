@@ -9,7 +9,7 @@ sys.path.insert(1, '../../')
 
 HIV_GENOME_AVERAGE_SIZE = 9700  # approximate average length of HIV genomes used for testing
 FPR = 0.005                     # the false positive rate we will use
-
+ECOLI_GENOME_AVERAGE_SIZE = 4700000
 
 def getDataStructure(ds):
     if ds == "HashSet":
@@ -18,6 +18,14 @@ def getDataStructure(ds):
         return BloomFilter(HIV_GENOME_AVERAGE_SIZE, FPR)
     else:
         return CountingFilter(HIV_GENOME_AVERAGE_SIZE, FPR)
+
+def getDataStructureEcoli(ds):
+    if ds == "HashSet":
+        return HashSet()
+    elif ds == "BloomFilter":
+        return BloomFilter(ECOLI_GENOME_AVERAGE_SIZE, FPR)
+    else:
+        return CountingFilter(ECOLI_GENOME_AVERAGE_SIZE, FPR)
 
 
 def readHIV(kmer_size, ds):
@@ -64,7 +72,7 @@ def readECOLI(kmer_size, ds):
 
     ds_list = []
     for i in range(len(genomeList)):
-        ds_list.append(getDataStructure(ds))
+        ds_list.append(getDataStructureEcoli(ds))
 
     for i in range(len(genomeList)):
         # print(len(genomeList[i]))
