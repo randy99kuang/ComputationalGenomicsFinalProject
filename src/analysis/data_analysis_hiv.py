@@ -309,9 +309,9 @@ preprocessCountingFilterHIVStrainTime(100, 0, 4)'''
         countingFilterTimes[i] = min(timesCf)
 
     fig = plt.figure()
-    plt.plot(numStrains, hashSetTimes, label='HashSet')
-    plt.plot(numStrains, bloomFilterTimes, label='BloomFilter')
-    plt.plot(numStrains, countingFilterTimes, label='CountingFilter')
+    plt.plot(numStrains, hashSetTimes, label='HashSet', marker='o')
+    plt.plot(numStrains, bloomFilterTimes, label='BloomFilter', marker='o')
+    plt.plot(numStrains, countingFilterTimes, label='CountingFilter', marker='o')
     plt.xlabel('number of strains of HIV')
     plt.ylabel('time to construct (seconds)')
     plt.title('Impact of strain count on merge time of HashSets, BloomFilters, and CountingFilters with length 100 kmers')
