@@ -210,10 +210,9 @@ def compareTimeAnalysesEcoli():
 
     fig = plt.figure()
     bftaec = bloomfilterTimeAnalysisECOLI()
+    print(bftaec)
     cftaec = countingfilterTimeAnalysisECOLI()
-    if (len(bftaec) != len(kmerSizeList) or len(cftaec) != len(kmerSizeList)):
-        print(bftaec)
-        print(cftaec)
+    print(cftaec)
     #plt.plot(kmerSizeList, hashsetTimeAnalysisECOLI(), label='HashSet')
     plt.plot(kmerSizeList, bftaec, label='BloomFilter')
     plt.plot(kmerSizeList, cftaec, label='CountingFilter')
