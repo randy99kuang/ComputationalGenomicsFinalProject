@@ -259,8 +259,8 @@ def accuracyAnalysisECOLI():
                 # else:
                 #   print("Error: bloom filter does contain key when it shouldn't, of value:", value)
 
-        print(totalCorrect / total)
-        print("false negative average:", falseNegativeSum / falseNegativeCount)
+        print("Bloom filter accuracy:", totalCorrect / total)
+        print("Bloom filter false negative average count:", falseNegativeSum / falseNegativeCount)
 
         for j in range(len(hs_test_list)):
             kmers_contained_in_bf = 0
