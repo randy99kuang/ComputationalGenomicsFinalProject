@@ -35,8 +35,8 @@ def preprocessHashSetECOLI(kmer_length):
 
 def preprocessBloomFilterECOLI(kmer_length, numIntersections):
     global bf_final                    # mark this as global variables so we can edit them
-
     bf_list = readECOLI(kmer_length, "BloomFilter")
+
     bf_final = merge(numIntersections, bf_list)
 
 
@@ -52,13 +52,13 @@ def preprocessTestDataECOLI(kmer_length):
 
     ECOLI1 = Path("../data/ECOLI/testecoli1.fas")
     ECOLI2 = Path("../data/ECOLI/testecoli2.fas")
-    ECOLI3 = Path("../data/ECOLI/testecoli3.fas")
-    ECOLI4 = Path("../data/ECOLI/testecoli4.fas")
+    # ECOLI3 = Path("../data/ECOLI/testecoli3.fas")
+    # ECOLI4 = Path("../data/ECOLI/testecoli4.fas")
     f1 = open(ECOLI1, "r")
     f2 = open(ECOLI2, "r")
-    f3 = open(ECOLI3, "r")
-    f4 = open(ECOLI4, "r")
-    genome_test_list = [parse_file_ecoli(f1), parse_file_ecoli(f2), parse_file_ecoli(f3), parse_file_ecoli(f4)]
+    # f3 = open(ECOLI3, "r")
+    # f4 = open(ECOLI4, "r")
+    genome_test_list = [parse_file_ecoli(f1)[0], parse_file_ecoli(f2)[0]]  # , parse_file_ecoli(f3), parse_file_ecoli(f4)]
 
     # Fill in hs_test_list
     for i in range(len(genome_test_list)):
@@ -226,41 +226,15 @@ def compareTimeAnalysesEcoli():
 
 def accuracyAnalysisECOLI():
     for i in range(1, 3, 1):
+        preprocessTestDataECOLI(130)
         print("number of intersections: ", i)
-        preprocessAllECOLI(100, i)
-        hashDictionary = hs_final.getDictionary()
-        totalCorrect = 0
-        total = len(hashDictionary)
-        falseNegativeCount = 0
-        falseNegativeSum = 0
-        for key, value in hashDictionary.items():
-            if value >= 2 ** i:
-                if bf_final.contains(key):
-                    totalCorrect += 1
-                else:
-                    # print("Error: bloom filter does not contain key when it should, of value:", value)
-                    falseNegativeCount += 1
-                    falseNegativeSum += value
-            else:
-                if not bf_final.contains(key):
-                    totalCorrect += 1
-                # else:
-                #   print("Error: bloom filter does contain key when it shouldn't, of value:", value)
-
-        print("Bloom filter accuracy:", totalCorrect / total)
-        print("Bloom filter false negative average count:", falseNegativeSum / falseNegativeCount)
-
+        preprocessBloomFilterECOLI(130, i)
         for j in range(len(hs_test_list)):
             kmers_contained_in_bf = 0
-            kmers_contained_in_hash = 0
             for key, value in hs_test_list[j].getDictionary().items():
-                # if value >= 2:
                 if bf_final.contains(key):
                     kmers_contained_in_bf += 1
-                if hs_final.contains(key):
-                    kmers_contained_in_hash += 1
             print("Test Strain Similarity to Bloom Filter/Counting Filter, Strain", j + 1, ":", kmers_contained_in_bf/hs_test_list[j].getSize())
-            print("Test Strain Similarity to Hash, Strain", j + 1, ":", kmers_contained_in_hash / hs_test_list[j].getSize())
         hs_test_list.clear()
 
 
