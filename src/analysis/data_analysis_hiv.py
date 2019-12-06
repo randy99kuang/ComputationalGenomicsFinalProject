@@ -7,6 +7,7 @@ sys.path.insert(1, '../../')
 
 hs_final = None
 bf_final = None
+cf_final = None
 hs_test_list = []
 
 
@@ -18,6 +19,7 @@ def preprocessAllHIV(kmer_length, numIntersections):
 
     preprocessHashSetHIV(kmer_length)
     preprocessBloomFilterHIV(kmer_length, numIntersections)
+    preprocessCountingFilterHIV(kmer_length, numIntersections)
     preprocessTestDataHIV(kmer_length)
 
 
@@ -36,10 +38,10 @@ def preprocessBloomFilterHIV(kmer_length, numIntersections):
 
 
 def preprocessCountingFilterHIV(kmer_length, numIntersections):
-    global bf_final                    # mark this as global variables so we can edit them
+    global cf_final                    # mark this as global variables so we can edit them
 
-    bf_list = readHIV(kmer_length, "CountingFilter")
-    bf_final = merge(numIntersections, bf_list)
+    cf_list = readHIV(kmer_length, "CountingFilter")
+    cf_final = merge(numIntersections, cf_list)
 
 
 def preprocessTestDataHIV(kmer_length):
@@ -69,17 +71,21 @@ def kmerLength_vs_hashset_size():
     x = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     y_hs_bytes = []
     y_bf_bytes = []
+    y_cf_bytes = []
     for i in x:
         preprocessBloomFilterHIV(i, 0)
+        preprocessCountingFilterHIV(i, 0)
         preprocessHashSetHIV(i)
         y_bf_bytes.append(bf_final.getBitSize() / 8)
         y_hs_bytes.append(asizeof.asizeof(hs_final))
+        y_cf_bytes.append(cf_final.getBitSize())
     fig = plt.figure()
     plt.plot(x, y_hs_bytes, label='HashSet')
     plt.plot(x, y_bf_bytes, label='BloomFilter')
+    plt.plot(x, y_cf_bytes, label='CountingFilter')
     plt.xlabel('k-mer length (nucleotides)')
     plt.ylabel('size of data structure (bytes)')
-    plt.title('Impact of k-mer length on the size of HashSets and BloomFilters')
+    plt.title('Impact of k-mer length on the size of HashSets, BloomFilters, and CountingFilters')
     plt.legend()
     plt.ticklabel_format(style='plain')
     plt.show()
@@ -229,6 +235,92 @@ def compareTimeAnalyses():
     plt.show()
 
 
+def preprocessHashSetHIVStrainTime(kmer_length, numStrains):
+    global hs_final                     # mark this as global variables so we can edit them
+
+    hs_list = readHIV(kmer_length, "HashSet")
+    hs_final = merge(0, hs_list[0:numStrains])
+
+
+def preprocessBloomFilterHIVStrainTime(kmer_length, numIntersections, numStrains):
+    global bf_final                    # mark this as global variables so we can edit them
+
+    bf_list = readHIV(kmer_length, "BloomFilter")
+    bf_final = merge(numIntersections, bf_list[0:numStrains])
+
+
+def preprocessCountingFilterHIVStrainTime(kmer_length, numIntersections, numStrains):
+    global cf_final                    # mark this as global variables so we can edit them
+
+    cf_list = readHIV(kmer_length, "CountingFilter")
+    cf_final = merge(numIntersections, cf_list[0:numStrains])
+
+def compareStrainTimeAnalysis():
+    SETUP_CODE_HS = '''
+from __main__ import preprocessHashSetHIVStrainTime'''
+    SETUP_CODE_BF = '''
+from __main__ import preprocessBloomFilterHIVStrainTime'''
+    SETUP_CODE_CF = '''
+from __main__ import preprocessCountingFilterHIVStrainTime'''
+
+    #k-mers of length 100
+    TEST_CODE_HS = [0, 1, 2, 3]
+    TEST_CODE_HS[0] = '''
+preprocessHashSetHIVStrainTime(100, 32)'''
+    TEST_CODE_HS[1] = '''
+preprocessHashSetHIVStrainTime(100, 16)'''
+    TEST_CODE_HS[2] = '''
+preprocessHashSetHIVStrainTime(100, 8)'''
+    TEST_CODE_HS[3] = '''
+preprocessHashSetHIVStrainTime(100, 4)'''
+
+    TEST_CODE_BF = [0, 1, 2, 3]
+    TEST_CODE_BF[0] = '''
+preprocessBloomFilterHIVStrainTime(100, 0, 32)'''
+    TEST_CODE_BF[1] = '''
+preprocessBloomFilterHIVStrainTime(100, 0, 16)'''
+    TEST_CODE_BF[2] = '''
+preprocessBloomFilterHIVStrainTime(100, 0, 8)'''
+    TEST_CODE_BF[3] = '''
+preprocessBloomFilterHIVStrainTime(100, 0, 4)'''
+
+    TEST_CODE_CF = [0, 1, 2, 3]
+    TEST_CODE_CF[0] = '''
+preprocessCountingFilterHIVStrainTime(100, 0, 32)'''
+    TEST_CODE_CF[1] = '''
+preprocessCountingFilterHIVStrainTime(100, 0, 16)'''
+    TEST_CODE_CF[2] = '''
+preprocessCountingFilterHIVStrainTime(100, 0, 8)'''
+    TEST_CODE_CF[3] = '''
+preprocessCountingFilterHIVStrainTime(100, 0, 4)'''
+
+
+    numStrains = [32, 16, 8, 4]
+    hashSetTimes = [0, 1, 2, 3]
+    bloomFilterTimes = [0, 1, 2, 3]
+    countingFilterTimes = [0, 1, 2, 3]
+
+    for i in range(4):
+        timesHs = timeit.repeat(setup=SETUP_CODE_HS, stmt=TEST_CODE_HS[i], number=3)
+        hashSetTimes[i] = min(timesHs)
+        timesBf = timeit.repeat(setup=SETUP_CODE_BF, stmt=TEST_CODE_BF[i], number=3)
+        bloomFilterTimes[i] = min(timesBf)
+        timesCf = timeit.repeat(setup=SETUP_CODE_CF, stmt=TEST_CODE_CF[i], number=3)
+        countingFilterTimes[i] = min(timesCf)
+
+    fig = plt.figure()
+    plt.plot(numStrains, hashSetTimes, label='HashSet')
+    plt.plot(numStrains, bloomFilterTimes, label='BloomFilter')
+    plt.plot(numStrains, countingFilterTimes, label='CountingFilter')
+    plt.xlabel('number of strains of HIV')
+    plt.ylabel('time to construct (seconds)')
+    plt.title('Impact of strain count on merge time of HashSets, BloomFilters, and CountingFilters with length 100 kmers')
+    plt.legend()
+    plt.ticklabel_format(style='plain')
+    plt.show()
+
+
+
 def accuracyAnalysisHIV():
     for i in range(1, 6, 1):
     # print("number of intersections: ", i)
@@ -268,4 +360,3 @@ def accuracyAnalysisHIV():
             print("Test Strain Similarity to Bloom Filter, Strain", j + 1, ":", kmers_contained_in_bf/hs_test_list[j].getSize())
             print("Test Strain Similarity to Hash, Strain", j + 1, ":", kmers_contained_in_hash / hs_test_list[j].getSize())
         hs_test_list.clear()
-

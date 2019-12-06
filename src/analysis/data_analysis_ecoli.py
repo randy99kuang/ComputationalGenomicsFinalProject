@@ -7,8 +7,10 @@ sys.path.insert(1, '../../')
 
 hs_final = None
 bf_final = None
+cf_final = None
 hs_test_list = []
 bf_test_list = []
+cf_test_list = []
 
 
 def preprocessAllHIV(kmer_length, numIntersections):
@@ -19,6 +21,7 @@ def preprocessAllHIV(kmer_length, numIntersections):
 
     preprocessHashSetHIV(kmer_length)
     preprocessBloomFilterHIV(kmer_length, numIntersections)
+    preprocessCountingFilterHIV(kmer_length, numIntersections)
     preprocessTestDataHIV(kmer_length)
 
 
