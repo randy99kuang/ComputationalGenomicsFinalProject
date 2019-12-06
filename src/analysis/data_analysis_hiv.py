@@ -323,6 +323,11 @@ preprocessCountingFilterHIVStrainTime(100, 0, 4)'''
 
 
 def accuracyAnalysisHIV():
+    bloomFilterStrainSimilarity = [1, 0, 1, 2, 3, 4]
+    hashSetStrainSimilarity = [1, 0, 1, 2, 3, 4]
+    bloomFilterAccuracy = [1, 0, 1, 2, 3, 4]
+    bloomFilterFalseNegative = [1, 0, 1, 2, 3, 4]
+
     for i in range(1, 6, 1):
     # print("number of intersections: ", i)
         preprocessAllHIV(100, i)
@@ -345,9 +350,13 @@ def accuracyAnalysisHIV():
                     totalCorrect += 1
                 # else:
                 #   print("Error: bloom filter does contain key when it shouldn't, of value:", value)
+        bloomFilterAccuracy[i] = totalCorrect / total
+        bloomFilterFalseNegative[i] = falseNegativeSum / falseNegativeCount
 
-        print("Bloom filter accuracy:", totalCorrect / total)
-        print("Bloom filter false negative average count:", falseNegativeSum / falseNegativeCount)
+        #print("Bloom filter accuracy:", totalCorrect / total)
+        #print("Bloom filter false negative average count:", falseNegativeSum / falseNegativeCount)
+        bloomSum = 0
+        hashSum = 0
         for j in range(len(hs_test_list)):
             kmers_contained_in_bf = 0
             kmers_contained_in_hash = 0
@@ -357,7 +366,66 @@ def accuracyAnalysisHIV():
                     kmers_contained_in_bf += 1
                 if hs_final.contains(key):
                     kmers_contained_in_hash += 1
-
-            print("Test Strain Similarity to Bloom Filter, Strain", j + 1, ":", kmers_contained_in_bf/hs_test_list[j].getSize())
-            print("Test Strain Similarity to Hash, Strain", j + 1, ":", kmers_contained_in_hash / hs_test_list[j].getSize())
+            bloomSum += kmers_contained_in_bf/hs_test_list[j].getSize()
+            hashSum += kmers_contained_in_hash / hs_test_list[j].getSize()
+            #print("Test Strain Similarity to Bloom Filter, Strain", j + 1, ":", kmers_contained_in_bf/hs_test_list[j].getSize())
+            #print("Test Strain Similarity to Hash, Strain", j + 1, ":", kmers_contained_in_hash / hs_test_list[j].getSize())
+        bloomFilterStrainSimilarity[i] = bloomSum / 5
+        hashSetStrainSimilarity[i] = hashSum / 5
         hs_test_list.clear()
+    bloomSum = 0
+    hashSum = 0
+    preprocessAllHIV(100, 0)
+    for j in range(len(hs_test_list)):
+        kmers_contained_in_bf = 0
+        kmers_contained_in_hash = 0
+        for key, value in hs_test_list[j].getDictionary().items():
+            # if value >= 2:
+            if bf_final.contains(key):
+                kmers_contained_in_bf += 1
+            if hs_final.contains(key):
+                kmers_contained_in_hash += 1
+        bloomSum += kmers_contained_in_bf/hs_test_list[j].getSize()
+        hashSum += kmers_contained_in_hash / hs_test_list[j].getSize()
+    bloomFilterStrainSimilarity[0] = bloomSum / 5
+    hashSetStrainSimilarity[0] = hashSum / 5
+    hs_test_list.clear()
+
+
+    intersectionX = [0, 1, 2, 3, 4, 5]
+
+    fig1 = plt.figure()
+    plt.plot(intersectionX, bloomFilterStrainSimilarity, marker='o')
+    plt.xlabel('number of intersections')
+    plt.ylabel('bloom filter average strain similarity')
+    plt.title('Average strain similarity for bloom filter versus number of intersections')
+    plt.legend()
+    plt.ticklabel_format(style='plain')
+    plt.show()
+
+    fig2 = plt.figure()
+    plt.plot(intersectionX, hashSetStrainSimilarity, marker='o')
+    plt.xlabel('number of intersections')
+    plt.ylabel('hash set average strain similarity')
+    plt.title('Average strain similarity for hash set versus number of intersections')
+    plt.legend()
+    plt.ticklabel_format(style='plain')
+    plt.show()
+
+    fig3 = plt.figure()
+    plt.plot(intersectionX, bloomFilterAccuracy, marker='o')
+    plt.xlabel('number of intersections')
+    plt.ylabel('bloom filter accuracy')
+    plt.title('Bloom filter accuracy versus number of intersections')
+    plt.legend()
+    plt.ticklabel_format(style='plain')
+    plt.show()
+
+    fig4 = plt.figure()
+    plt.plot(intersectionX, bloomFilterFalseNegative, marker='o')
+    plt.xlabel('number of intersections')
+    plt.ylabel('bloom filter false negatives')
+    plt.title('Bloom filter false negatives versus number of intersections')
+    plt.legend()
+    plt.ticklabel_format(style='plain')
+    plt.show()
