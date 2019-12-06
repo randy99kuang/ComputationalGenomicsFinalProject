@@ -11,43 +11,43 @@ hs_test_list = []
 bf_test_list = []
 
 
-def preprocessAllHIV(kmer_length, numIntersections):
+def preprocessAllECOLI(kmer_length, numIntersections):
     """
-    Method that reads the 32 HIV strains into both a hashset and a bloom filter, and then reads the 5 test strains
+    Method that reads the 32 ECOLI strains into both a hashset and a bloom filter, and then reads the 5 test strains
     into both as well. This method will be called before many of the data-analysis methods
     """
 
-    preprocessHashSetHIV(kmer_length)
-    preprocessBloomFilterHIV(kmer_length, numIntersections)
-    preprocessTestDataHIV(kmer_length)
+    preprocessHashSetECOLI(kmer_length)
+    preprocessBloomFilterECOLI(kmer_length, numIntersections)
+    preprocessTestDataECOLI(kmer_length)
 
 
-def preprocessHashSetHIV(kmer_length):
+def preprocessHashSetECOLI(kmer_length):
     global hs_final                     # mark this as global variables so we can edit them
 
-    hs_list = readHIV(kmer_length, "HashSet")
+    hs_list = readECOLI(kmer_length, "HashSet")
     hs_final = merge(0, hs_list)
 
 
-def preprocessBloomFilterHIV(kmer_length, numIntersections):
+def preprocessBloomFilterECOLI(kmer_length, numIntersections):
     global bf_final                    # mark this as global variables so we can edit them
 
-    bf_list = readHIV(kmer_length, "BloomFilter")
+    bf_list = readECOLI(kmer_length, "BloomFilter")
     bf_final = merge(numIntersections, bf_list)
 
 
-def preprocessCountingFilterHIV(kmer_length, numIntersections):
-    global bf_final                    # mark this as global variables so we can edit them
+def preprocessCountingFilterECOLI(kmer_length, numIntersections):
+    global cf_final                    # mark this as global variables so we can edit them
 
-    bf_list = readHIV(kmer_length, "CountingFilter")
-    bf_final = merge(numIntersections, bf_list)
+    bf_list = readECOLI(kmer_length, "CountingFilter")
+    bf_final = merge(numIntersections, cf_list)
 
 
-def preprocessTestDataHIV(kmer_length):
+def preprocessTestDataECOLI(kmer_length):
     global hs_test_list, bf_test_list  # mark these as global variables so we can edit them
 
-    hiv5 = Path("../data/HIV/hiv5Test.fasta")
-    f = open(hiv5, "r")
+    ECOLI5 = Path("../data/ECOLI/ECOLI5Test.fasta")
+    f = open(ECOLI5, "r")
     genome_test_list = parse_file(f)
 
     # Fill in bf_test_list
@@ -75,8 +75,8 @@ def kmerLength_vs_hashset_size():
     y_hs_bytes = []
     y_bf_bytes = []
     for i in x:
-        preprocessBloomFilterHIV(i, 0)
-        preprocessHashSetHIV(i)
+        preprocessBloomFilterECOLI(i, 0)
+        preprocessHashSetECOLI(i)
         y_bf_bytes.append(bf_final.getBitSize() / 8)
         y_hs_bytes.append(asizeof.asizeof(hs_final))
     fig = plt.figure()
@@ -96,33 +96,33 @@ def hashsetTimeAnalysis():
     """
 
     SETUP_CODE = '''
-from __main__ import preprocessHashSetHIV'''
+from __main__ import preprocessHashSetECOLI'''
 
     TEST_CODE = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     TEST_CODE[0] = '''
-preprocessHashSetHIV(5)'''
+preprocessHashSetECOLI(5)'''
     TEST_CODE[1] = '''
-preprocessHashSetHIV(10)'''
+preprocessHashSetECOLI(10)'''
     TEST_CODE[2] = '''
-preprocessHashSetHIV(30)'''
+preprocessHashSetECOLI(30)'''
     TEST_CODE[3] = '''
-preprocessHashSetHIV(50)'''
+preprocessHashSetECOLI(50)'''
     TEST_CODE[4] = '''
-preprocessHashSetHIV(70)'''
+preprocessHashSetECOLI(70)'''
     TEST_CODE[5] = '''
-preprocessHashSetHIV(100)'''
+preprocessHashSetECOLI(100)'''
     TEST_CODE[6] = '''
-preprocessHashSetHIV(120)'''
+preprocessHashSetECOLI(120)'''
     TEST_CODE[7] = '''
-preprocessHashSetHIV(150)'''
+preprocessHashSetECOLI(150)'''
     TEST_CODE[8] = '''
-preprocessHashSetHIV(190)'''
+preprocessHashSetECOLI(190)'''
     TEST_CODE[9] = '''
-preprocessHashSetHIV(250)'''
+preprocessHashSetECOLI(250)'''
     TEST_CODE[10] = '''
-preprocessHashSetHIV(350)'''
+preprocessHashSetECOLI(350)'''
     TEST_CODE[11] = '''
-preprocessHashSetHIV(500)'''
+preprocessHashSetECOLI(500)'''
 
     hashSetTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
@@ -138,33 +138,33 @@ def bloomfilterTimeAnalysis():
     """
 
     SETUP_CODE = '''
-from __main__ import preprocessBloomFilterHIV'''
+from __main__ import preprocessBloomFilterECOLI'''
 
     TEST_CODE = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     TEST_CODE[0] = '''
-preprocessBloomFilterHIV(5, 0)'''
+preprocessBloomFilterECOLI(5, 0)'''
     TEST_CODE[1] = '''
-preprocessBloomFilterHIV(10, 0)'''
+preprocessBloomFilterECOLI(10, 0)'''
     TEST_CODE[2] = '''
-preprocessBloomFilterHIV(30, 0)'''
+preprocessBloomFilterECOLI(30, 0)'''
     TEST_CODE[3] = '''
-preprocessBloomFilterHIV(50, 0)'''
+preprocessBloomFilterECOLI(50, 0)'''
     TEST_CODE[4] = '''
-preprocessBloomFilterHIV(70, 0)'''
+preprocessBloomFilterECOLI(70, 0)'''
     TEST_CODE[5] = '''
-preprocessBloomFilterHIV(100, 0)'''
+preprocessBloomFilterECOLI(100, 0)'''
     TEST_CODE[6] = '''
-preprocessBloomFilterHIV(120, 0)'''
+preprocessBloomFilterECOLI(120, 0)'''
     TEST_CODE[7] = '''
-preprocessBloomFilterHIV(150, 0)'''
+preprocessBloomFilterECOLI(150, 0)'''
     TEST_CODE[8] = '''
-preprocessBloomFilterHIV(190, 0)'''
+preprocessBloomFilterECOLI(190, 0)'''
     TEST_CODE[9] = '''
-preprocessBloomFilterHIV(250, 0)'''
+preprocessBloomFilterECOLI(250, 0)'''
     TEST_CODE[10] = '''
-preprocessBloomFilterHIV(350, 0)'''
+preprocessBloomFilterECOLI(350, 0)'''
     TEST_CODE[11] = '''
-preprocessBloomFilterHIV(500, 0)'''
+preprocessBloomFilterECOLI(500, 0)'''
 
     bloomFilterTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
@@ -179,33 +179,33 @@ def countingfilterTimeAnalysis():
     """
 
     SETUP_CODE = '''
-from __main__ import preprocessCountingFilterHIV'''
+from __main__ import preprocessCountingFilterECOLI'''
 
     TEST_CODE = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     TEST_CODE[0] = '''
-preprocessCountingFilterHIV(5, 0)'''
+preprocessCountingFilterECOLI(5, 0)'''
     TEST_CODE[1] = '''
-preprocessCountingFilterHIV(10, 0)'''
+preprocessCountingFilterECOLI(10, 0)'''
     TEST_CODE[2] = '''
-preprocessCountingFilterHIV(30, 0)'''
+preprocessCountingFilterECOLI(30, 0)'''
     TEST_CODE[3] = '''
-preprocessCountingFilterHIV(50, 0)'''
+preprocessCountingFilterECOLI(50, 0)'''
     TEST_CODE[4] = '''
-preprocessCountingFilterHIV(70, 0)'''
+preprocessCountingFilterECOLI(70, 0)'''
     TEST_CODE[5] = '''
-preprocessCountingFilterHIV(100, 0)'''
+preprocessCountingFilterECOLI(100, 0)'''
     TEST_CODE[6] = '''
-preprocessCountingFilterHIV(120, 0)'''
+preprocessCountingFilterECOLI(120, 0)'''
     TEST_CODE[7] = '''
-preprocessCountingFilterHIV(150, 0)'''
+preprocessCountingFilterECOLI(150, 0)'''
     TEST_CODE[8] = '''
-preprocessCountingFilterHIV(190, 0)'''
+preprocessCountingFilterECOLI(190, 0)'''
     TEST_CODE[9] = '''
-preprocessCountingFilterHIV(250, 0)'''
+preprocessCountingFilterECOLI(250, 0)'''
     TEST_CODE[10] = '''
-preprocessCountingFilterHIV(350, 0)'''
+preprocessCountingFilterECOLI(350, 0)'''
     TEST_CODE[11] = '''
-preprocessCountingFilterHIV(500, 0)'''
+preprocessCountingFilterECOLI(500, 0)'''
 
     countingFilterTimes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
@@ -234,10 +234,10 @@ def compareTimeAnalyses():
     plt.show()
 
 
-def accuracyAnalysisHIV():
+def accuracyAnalysisECOLI():
     for i in range(1, 6, 1):
         print("number of intersections: ", i)
-        preprocessAllHIV(100, i)
+        preprocessAllECOLI(100, i)
         hashDictionary = hs_final.getDictionary()
         totalCorrect = 0
         total = len(hashDictionary)

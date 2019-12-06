@@ -30,6 +30,24 @@ def parse_file(txt):
     return genomeList
 
 
+def parse_file_ecoli(txt):
+    currentString = ""
+    txt.readline()
+    genomeList = []
+    while True:
+        line = txt.readline()
+        if line[0] == ">" or len(line) == 0:
+            # End of file
+            break
+        line = line.replace("-", "")    # remove any dashes in the line
+        currentString = currentString + line
+
+    # append list string to list
+    currentString = currentString.translate({ord(c): None for c in string.whitespace})  # strip whitespaces
+    genomeList.append(currentString)
+    return genomeList
+
+
 def break_kmers(genome, ds, kmer_size):
     for i in range(len(genome) - kmer_size + 1):  # for each k-mer
         kmer = genome[i:i+kmer_size]

@@ -43,6 +43,37 @@ def readHIV(kmer_size, ds):
     return ds_list
 
 
+def readECOLI(kmer_size, ds):
+    ecoli1 = Path("../data/ECOLI/ecoli1.fasta")
+    g1 = open(ecoli1, "r")
+    list1 = parse_file(g1)
+
+    ecoli2 = Path("../data/ECOLI/ecoli2.fasta")
+    g2 = open(ecoli1, "r")
+    list2 = parse_file(g2)
+
+    ecoli3 = Path("../data/ECOLI/ecoli3.fasta")
+    g3 = open(ecoli1, "r")
+    list3 = parse_file(g3)
+
+    ecoli4 = Path("../data/ECOLI/ecoli4.fasta")
+    g4 = open(ecoli1, "r")
+    list4 = parse_file(g4)
+
+    genomeList = list1 + list2 + list3 + list4
+
+    ds_list = []
+    for i in range(len(genomeList)):
+        ds_list.append(getDataStructure(ds))
+
+    for i in range(len(genomeList)):
+        # print(len(genomeList[i]))
+        ds_list[i] = break_kmers(genomeList[i], ds_list[i], kmer_size)
+        # print(sum(ds_list[i].getDictionary().values()))
+
+    return ds_list
+
+
 def merge(numIntersections, ds_list):
     for i in range(numIntersections):   # start by intersecting all sets numIntersection times
         new_list = []
