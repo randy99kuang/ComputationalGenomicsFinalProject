@@ -193,7 +193,7 @@ class TestHashSet(unittest.TestCase):
 
         ret2 = a.howMany(str(1034))
         self.assertTrue(ret2 == 2)
-    
+
     def test_check_Union(self):
         a = CountingFilter(n, p)
         a.insert(str(1034))
