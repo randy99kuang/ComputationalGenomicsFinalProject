@@ -186,4 +186,6 @@ def compareTimeAnalyses():
 
 
 def accuracyAnalysis():
-    preprocessAllHIV()
+    preprocessAllHIV(100, 1)
+    hash_ele = {}
+    for i in range(hs_final.getSize()):
