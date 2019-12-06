@@ -51,6 +51,11 @@ class CountingFilter(Set):
             # Add to each element in bit_array
         # self.bit_array = [x+1 for x in self.bit_array[digests]]
 
+    def delete(self, item):
+        for i in range(self.hash_count):
+            digest = mmh3.hash(item, i) % self.size
+            self.counting_array[digest] = self.counting_array[digest] - 1
+
     def contains(self, item):
         """
         Check for existence of an item in filter
