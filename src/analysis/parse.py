@@ -36,11 +36,14 @@ def parse_file_ecoli(txt):
     genomeList = []
     while True:
         line = txt.readline()
-        if line[0] == ">" or len(line) == 0:
+        if len(line) == 0:
             # End of file
             break
-        line = line.replace("-", "")    # remove any dashes in the line
-        currentString = currentString + line
+        if line[0] == ">":  # append whenever we see the mark for a new strain's genome
+            continue
+        else:
+            line = line.replace("-", "")  # remove any dashes in the line
+            currentString = currentString + line
 
     # append list string to list
     currentString = currentString.translate({ord(c): None for c in string.whitespace})  # strip whitespaces
