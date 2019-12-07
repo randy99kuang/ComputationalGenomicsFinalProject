@@ -22,12 +22,12 @@ This part contains the analytic methods for HIV strains
 This function compares the size of each data structure (hashset, bloom filter,
 and counting filter) on the same data, as k-mer size is varied.
 """
-#kmerLength_vs_hashset_size()
+# kmerLength_vs_hashset_size()
 """
 This function compares the building time of each data structure as k-mer size
 is varied.
 """
-#compareTimeAnalyses()
+compareTimeAnalyses()
 """
 This function compares the amount of time it takes to merge each method as
 the number of different strains is increased.

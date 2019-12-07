@@ -249,10 +249,10 @@ def accuracyAnalysisECOLI():
         hs_test_list.clear()
 
 #Finds whether a k-mer is common across strains of E. coli
-def mark_test_strain_kmers_ecoli(kmer):
+def mark_test_strain_kmers_ecoli(kmer, intersections):
     global preprocess_bloom_filter
     if not preprocess_bloom_filter:
-        preprocessBloomFilterECOLI(len(kmer))
+        preprocessBloomFilterECOLI(len(kmer), intersections)
         preprocess_bloom_filter = True
     if bf_final.contains(kmer):
         return True
