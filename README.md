@@ -13,6 +13,8 @@ Before running our project, a few non-default Python packages need to be install
 #### Generating the figures submitted in the final paper
 The only Python file that should actually be run for analysis is ```main.py```, which is found in ```src/analysis```. This file calls functions that are in ```data_analysis_ecoli.py``` and ```data_analysis_hiv.py``` to populate data structures and create figures/graphs. All methods that should be called are already contained in ```main.py``` and commented out. Thus, to run one of these tests, simply uncomment its method. Each of the functions and what they test are described in ```main.py```, but more details about their implementation can be found in the method descriptions in ```data_analysis_ecoli.py``` and ```data_analysis_hiv.py```.
 
+**Note**: In order to email our code, we needed to remove the E. Coli genomes from our data folder. However, any of the methods in ```data_analysis_hiv.py``` will still work. It is most likely impractical for graders to test methods in ```data_analysis_ecoli.py``` anyway, as any of those methods need 7+ hours to run. However, note that as the HIV genome is relatively short, the HIV data analysis methods run fairly quickly, in 1-2 minutes max. 
+
 #### Running the unit tests
 For those interested, unit tests may be run on our data structures (bloom filters, counting filters, and hashsets). These can be found in the ```tests``` folder. To run the unit tests, enter the following from the command line: ```python -m unittest tests/test_hashset.py```, where ```test_hashset.py``` can be replaced with the name of any of the unit test file names.
 
