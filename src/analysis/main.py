@@ -44,8 +44,9 @@ into the filters
 This is the function for future researchers that tells you whether a specific
 k-mer is common across many strains of HIV.
 The input argument 'kmer' should be replaced with the actual k-mer.
+Intersections should be replaced with the number of intersections the user wants.
 """
-#mark_test_strain_kmers(kmer)
+#mark_test_strain_kmers(kmer, intersections)
 
 
 
@@ -75,5 +76,6 @@ we put in the filters
 This is the function for future researchers that tells you whether a specific
 k-mer is common across many strains of E. coli.
 The input argument 'kmer' should be replaced with the actual k-mer.
+Intersections should be replaced with the number of intersections the user wants.
 """
-#mark_test_strain_kmers_ecoli(kmer)
+#mark_test_strain_kmers_ecoli(kmer, intersections)

@@ -483,10 +483,10 @@ def accuracyAnalysisHIV():
     plt.show()
 
 #Finds whether a k-mer is common across strains of HIV
-def mark_test_strain_kmers(kmer):
+def mark_test_strain_kmers(kmer, i):
     global preprocess_bloom_filter
     if not preprocess_bloom_filter:
-        preprocessBloomFilterHIV(len(kmer))
+        preprocessBloomFilterHIV(len(kmer), i)
         preprocess_bloom_filter = True
     if bf_final.contains(kmer):
         return True
