@@ -455,7 +455,7 @@ def accuracyAnalysisHIV():
     bloomFilterFalsePositive = [x * 100 for x in bloomFilterFalsePositive]
     fig3 = plt.figure()
     plt.plot(intersectionX, bloomFilterAccuracy, marker='o', label='Accuracy')
-    plt.plot(intersectionX, bloomFilterFalseNegative, marker='o', label='False Negatives')
+    #plt.plot(intersectionX, bloomFilterFalseNegative, marker='o', label='False Negatives')
     plt.plot(intersectionX, bloomFilterFalsePositive, marker='o', label='False Positives')
     plt.xlabel('number of intersections')
     plt.ylabel('percent')
