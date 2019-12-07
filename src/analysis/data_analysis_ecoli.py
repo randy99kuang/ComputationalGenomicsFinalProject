@@ -41,10 +41,10 @@ def preprocessBloomFilterECOLI(kmer_length, numIntersections):
 
 
 def preprocessCountingFilterECOLI(kmer_length, numIntersections):
-    global bf_final                    # mark this as global variables so we can edit them
+    global cf_final                    # mark this as global variables so we can edit them
 
-    bf_list = readECOLI(kmer_length, "CountingFilter")
-    bf_final = merge(numIntersections, bf_list)
+    cf_list = readECOLI(kmer_length, "CountingFilter")
+    cf_final = merge(numIntersections, cf_list)
 
 
 def preprocessTestDataECOLI(kmer_length):
@@ -77,17 +77,21 @@ def kmerLength_vs_hashset_size_ecoli():
     x = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     y_hs_bytes = []
     y_bf_bytes = []
+    y_cf_bytes = []
     for i in x:
         preprocessBloomFilterECOLI(i, 0)
         preprocessHashSetECOLI(i)
+        preprocessCountingFilterECOLI(i, 0)
         y_bf_bytes.append(bf_final.getBitSize() / 8)
         y_hs_bytes.append(asizeof.asizeof(hs_final))
+        y_cf_bytes.append(cf_final.getBitSize())
     fig = plt.figure()
     plt.plot(x, y_hs_bytes, label='HashSet')
     plt.plot(x, y_bf_bytes, label='BloomFilter')
+    plt.plot(x, y_cf_bytes, label='CountingFilter')
     plt.xlabel('k-mer length (nucleotides)')
     plt.ylabel('size of data structure (bytes)')
-    plt.title('Impact of k-mer length on the size of HashSets and BloomFilters')
+    plt.title('Impact of k-mer length on the size of HashSets, BloomFilters, and CountingFilters')
     plt.legend()
     plt.ticklabel_format(style='plain')
     plt.show()

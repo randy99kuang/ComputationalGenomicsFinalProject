@@ -412,7 +412,6 @@ def accuracyAnalysisHIV():
     plt.xlabel('number of intersections')
     plt.ylabel('bloom filter average strain similarity')
     plt.title('Average strain similarity for bloom filter versus number of intersections')
-    plt.legend()
     plt.ticklabel_format(style='plain')
     plt.show()
 
@@ -421,7 +420,6 @@ def accuracyAnalysisHIV():
     plt.xlabel('number of intersections')
     plt.ylabel('hash set average strain similarity')
     plt.title('Average strain similarity for hash set versus number of intersections')
-    plt.legend()
     plt.ticklabel_format(style='plain')
     plt.show()
 
@@ -430,7 +428,6 @@ def accuracyAnalysisHIV():
     plt.xlabel('number of intersections')
     plt.ylabel('bloom filter accuracy')
     plt.title('Bloom filter accuracy versus number of intersections')
-    plt.legend()
     plt.ticklabel_format(style='plain')
     plt.show()
 
@@ -439,7 +436,6 @@ def accuracyAnalysisHIV():
     plt.xlabel('number of intersections')
     plt.ylabel('bloom filter false negatives')
     plt.title('Bloom filter false negatives versus number of intersections')
-    plt.legend()
     plt.ticklabel_format(style='plain')
     plt.show()
 
@@ -448,7 +444,6 @@ def accuracyAnalysisHIV():
     plt.xlabel('number of intersections')
     plt.ylabel('bloom filter false negatives')
     plt.title('Bloom filter false positives versus number of intersections')
-    plt.legend()
     plt.ticklabel_format(style='plain')
     plt.show()
 
