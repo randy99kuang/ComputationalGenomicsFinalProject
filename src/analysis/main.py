@@ -14,6 +14,7 @@ by line, in this file. One method at a time may be uncommented and run.
 """
 
 
+
 """
 This part contains the analytic methods for HIV strains
 """
@@ -38,7 +39,14 @@ false positives, and correctness) to the hashset (which is 100% accurate). It
 also compares the similarity of an external string to the strains that we put
 into the filters
 """
-accuracyAnalysisHIV()
+#accuracyAnalysisHIV()
+"""
+This is the function for future researchers that tells you whether a specific
+k-mer is common across many strains of HIV.
+The input argument 'kmer' should be replaced with the actual k-mer.
+"""
+#mark_test_strain_kmers(kmer)
+
 
 
 
@@ -62,3 +70,10 @@ This function outputs the similarity of an external strain to the strains that
 we put in the filters
 """
 #accuracyAnalysisECOLI()
+
+"""
+This is the function for future researchers that tells you whether a specific
+k-mer is common across many strains of E. coli.
+The input argument 'kmer' should be replaced with the actual k-mer.
+"""
+#mark_test_strain_kmers_ecoli(kmer)

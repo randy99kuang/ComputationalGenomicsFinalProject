@@ -10,6 +10,13 @@ bf_final = None
 cf_final = None
 hs_test_list = []
 
+"""
+These functions within this file share the exact same architecture and logic
+as the ones within data_analysis_hiv.py. This means that the only things that
+have changed within this file compared to that are that the name HIV in
+variables and functions are changed to ecoli (or ecoli is added). This file also
+references data in locations where we expect to find e. coli data.
+"""
 
 def preprocessAllECOLI(kmer_length, numIntersections):
     """
@@ -241,8 +248,8 @@ def accuracyAnalysisECOLI():
             print("Test Strain Similarity to Bloom Filter/Counting Filter, Strain", j + 1, ":", kmers_contained_in_bf/hs_test_list[j].getSize())
         hs_test_list.clear()
 
-
-def mark_test_strain_kmers(kmer):
+#Finds whether a k-mer is common across strains of E. coli
+def mark_test_strain_kmers_ecoli(kmer):
     global preprocess_bloom_filter
     if not preprocess_bloom_filter:
         preprocessBloomFilterECOLI(len(kmer))
