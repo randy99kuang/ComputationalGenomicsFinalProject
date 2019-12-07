@@ -38,7 +38,7 @@ false positives, and correctness) to the hashset (which is 100% accurate). It
 also compares the similarity of an external string to the strains that we put
 into the filters
 """
-#accuracyAnalysisHIV()
+accuracyAnalysisHIV()
 
 
 
