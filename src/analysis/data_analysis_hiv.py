@@ -333,9 +333,10 @@ def false_positive_accuracy():
 def accuracyAnalysisHIV():
     bloomFilterStrainSimilarity = [1, 0, 1, 2, 3, 4]
     hashSetStrainSimilarity = [1, 0, 1, 2, 3, 4]
-    bloomFilterAccuracy = [1, 0, 1, 2, 3, 4]
+    bloomFilterAccuracy = [0, 1, 2, 3, 4]
     bloomFilterFalseNegative = [1, 0, 1, 2, 3, 4]
     bloomFilterFalsePositive = [0, 1, 2, 3, 4, 5]
+    false_negative_avg_length = [1, 2, 3, 4, 5]
     for i in range(1, 6, 1):
     # print("number of intersections: ", i)
         preprocessAllHIV(100, i)
@@ -348,7 +349,7 @@ def accuracyAnalysisHIV():
         bloomFilterFalsePositive[i] = false_positive_accuracy()
 
         for key, value in hashDictionary.items():
-            if value >= 2:
+            if value >= 2 ** i:
                 if bf_final.contains(key):
                     totalCorrect += 1
                 else:
@@ -360,11 +361,10 @@ def accuracyAnalysisHIV():
                     totalCorrect += 1
                 # else:
                 #   print("Error: bloom filter does contain key when it shouldn't, of value:", value)
-        bloomFilterAccuracy[i] = totalCorrect / total
+        bloomFilterAccuracy[i - 1] = totalCorrect / total
         bloomFilterFalseNegative[i] = falseNegativeSum / falseNegativeCount
 
-        #print("Bloom filter accuracy:", totalCorrect / total)
-        #print("Bloom filter false negative average count:", falseNegativeSum / falseNegativeCount)
+        false_negative_avg_length[i - 1] = falseNegativeSum/falseNegativeCount
         bloomSum = 0
         hashSum = 0
         for j in range(len(hs_test_list)):
@@ -386,6 +386,7 @@ def accuracyAnalysisHIV():
     bloomSum = 0
     hashSum = 0
     preprocessAllHIV(100, 0)
+
     bloomFilterFalsePositive[0] = false_positive_accuracy()
     for j in range(len(hs_test_list)):
         kmers_contained_in_bf = 0
@@ -404,6 +405,7 @@ def accuracyAnalysisHIV():
 
 
     intersectionX = [0, 1, 2, 3, 4, 5]
+    intersectionsX_one = [1, 2, 3, 4, 5]
 
     fig1 = plt.figure()
     plt.plot(intersectionX, bloomFilterStrainSimilarity, marker='o')
@@ -424,7 +426,7 @@ def accuracyAnalysisHIV():
     plt.show()
 
     fig3 = plt.figure()
-    plt.plot(intersectionX, bloomFilterAccuracy, marker='o')
+    plt.plot(intersectionsX_one, bloomFilterAccuracy, marker='o')
     plt.xlabel('number of intersections')
     plt.ylabel('bloom filter accuracy')
     plt.title('Bloom filter accuracy versus number of intersections')
@@ -446,6 +448,15 @@ def accuracyAnalysisHIV():
     plt.xlabel('number of intersections')
     plt.ylabel('bloom filter false negatives')
     plt.title('Bloom filter false positives versus number of intersections')
+    plt.legend()
+    plt.ticklabel_format(style='plain')
+    plt.show()
+
+    fig6 = plt.figure()
+    plt.plot(intersectionsX_one, false_negative_avg_length, marker='o')
+    plt.xlabel('number of intersections')
+    plt.ylabel('average length of false negatives')
+    plt.title('Bloom filter length of false negatives versus number of intersections')
     plt.legend()
     plt.ticklabel_format(style='plain')
     plt.show()
