@@ -492,3 +492,12 @@ def mark_test_strain_kmers(kmer, i):
         return True
     else:
         return False
+
+# Proves we can identify regions of a strain are common. We use our own test strain to call mark_test_strain_kmers
+# Returns a dictionary of common and uncommon kmers
+def mark_test_strain_kmers_default():
+    preprocessTestDataHIV(100)
+    ex_dict = {}
+    for key, value in hs_test_list[0].getDictionary().items():
+        ex_dict[key] = mark_test_strain_kmers(key, 2)
+    return ex_dict

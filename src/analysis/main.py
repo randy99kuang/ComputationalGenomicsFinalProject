@@ -27,7 +27,7 @@ and counting filter) on the same data, as k-mer size is varied.
 This function compares the building time of each data structure as k-mer size
 is varied.
 """
-compareTimeAnalyses()
+# compareTimeAnalyses()
 """
 This function compares the amount of time it takes to merge each method as
 the number of different strains is increased.
@@ -48,6 +48,12 @@ Intersections should be replaced with the number of intersections the user wants
 """
 #mark_test_strain_kmers(kmer, intersections)
 
+
+"""
+This function does what the above function does for HIV but with our own test strain.
+Returns a dictionary with k-mers that are common (true) and k-mers that are not common (false)
+"""
+#mark_test_strain_kmers_default()
 
 
 
